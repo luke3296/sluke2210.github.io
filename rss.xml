@@ -4,7 +4,7 @@
         <title></title>
         <link>undefined</link>
         <description>undefined</description>
-        <lastBuildDate>Sat, 25 Feb 2023 17:23:40 GMT</lastBuildDate>
+        <lastBuildDate>Sat, 25 Feb 2023 17:27:20 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>Joplin Pages Publisher</generator>
         <item>
@@ -110,6 +110,9 @@
             <guid>2a01556bd77243cdb9d406141b990156</guid>
             <pubDate>Sat, 25 Feb 2023 16:45:56 GMT</pubDate>
             <content:encoded><![CDATA[<h1 id="uninformed-search">Uninformed Search</h1>
+<p>we will use the N tile puzzle as an example<br />
+find a disrecption of the ntile here<br />
+<a href="/article/n-tile">N tile</a></p>
 ]]></content:encoded>
         </item>
         <item>
@@ -138,9 +141,11 @@ There have been many attempts to make intellegent programs but the holy grail of
 which are pretty  cool.</p>
 <p>Links:</p>
 <p>uninformed state based search : <a href="/article/uninformed-search">Uninformed search</a></p>
+<p>joplin://x-callback-url/openNote?id=04b52c788e284e5e911c0dfdbff04794</p>
 <p>informed state based search : <a href="/article/infromed-search">Infromed search</a></p>
 <p>agents : <a href="/article/agents">Agents </a></p>
-<p>Ref : Artificial Intellligence A moderd approach by Stuart Russell and Peter Norvig ,  page 1-</p>
+<p>Ref : Artificial Intellligence A moderd approach , 3rd edition, by Stuart Russell and Peter Norvig ,  page 1- 8</p>
+<p>Ref : Artificial Intellligence Structures and Statergies for Complex Problem Solving , sixth edition by George F Luger chapter 1</p>
 ]]></content:encoded>
         </item>
         <item>
