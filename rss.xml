@@ -1,0 +1,510 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+    <channel>
+        <title></title>
+        <link>undefined</link>
+        <description>undefined</description>
+        <lastBuildDate>Sat, 25 Feb 2023 17:22:54 GMT</lastBuildDate>
+        <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
+        <generator>Joplin Pages Publisher</generator>
+        <item>
+            <title><![CDATA[N tile]]></title>
+            <guid>1ac987e2fb0e42578339f324da959d10</guid>
+            <pubDate>Sat, 25 Feb 2023 17:08:15 GMT</pubDate>
+            <content:encoded><![CDATA[<p>N tile</p>
+<p>The N tile is a simple game where you have a grid of blocks with one blank, you move the blank around and in the process generate diffierent configuratiosn  of the blocks in the grip.</p>
+<p>Chrismass crackers oft contain a 3-puzzle or 4-puzzle with a chirmass themed picture on it as a prize.</p>
+<p>You can check if a n puzzle is solvable by counting the number of inverions in the initial state. If its even the puzzle is solvable, if its odd the puzzle is unsolvable.</p>
+<p>transistions or moves involve sliding a block into the postition of the blank, though in practice it's easier to think of moving the blank around the board.</p>
+<p>Consider this example where the blank is represneted as a 0.</p>
+<table>
+<thead>
+<tr>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>3</td>
+<td>4</td>
+<td>5</td>
+</tr>
+<tr>
+<td>6</td>
+<td>7</td>
+<td>8</td>
+</tr>
+</tbody>
+</table>
+<p>there are two pssible transistions from this state, you could slide the 1 tile left ot the 3 tile up yielding the sucsessors</p>
+<table>
+<thead>
+<tr>
+<th>1</th>
+<th>0</th>
+<th>2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>3</td>
+<td>4</td>
+<td>5</td>
+</tr>
+<tr>
+<td>6</td>
+<td>7</td>
+<td>8</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>3</th>
+<th>1</th>
+<th>2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>4</td>
+<td>5</td>
+</tr>
+<tr>
+<td>6</td>
+<td>7</td>
+<td>8</td>
+</tr>
+</tbody>
+</table>
+]]></content:encoded>
+        </item>
+        <item>
+            <title><![CDATA[Agents ]]></title>
+            <guid>04b52c788e284e5e911c0dfdbff04794</guid>
+            <pubDate>Sat, 25 Feb 2023 16:46:38 GMT</pubDate>
+            <content:encoded><![CDATA[<h1 id="agents">Agents</h1>
+<p>An agent is anything that acts. It can be a piece of software or purley conceptual. we can model differnet types of agents to perfrom different types of tasks.</p>
+<ol>
+<li>Agents are automnous / semi autommous meaning they are able to act without perfect knowledge of the enviroment</li>
+<li>Agents are situated in an enviroment (where enviroment is anything that isn't the agent including other agents in multiagent systems) an can perceive some of its enviroment</li>
+<li>Agents are iterational with other agents forming a soceity of agents that can work on aparticular task</li>
+<li>the society of agents is structured. that is each agent perfomrs one specific task using its own perception of enviroments and its own set of actions. It works with other agents in a sructured way to perform problem solving</li>
+<li>Intelegence is an emergent effect that can come out of the iteractions of a society of agents.</li>
+</ol>
+]]></content:encoded>
+        </item>
+        <item>
+            <title><![CDATA[Infromed search]]></title>
+            <guid>5d5becad927a4d17a11f7f38d7397817</guid>
+            <pubDate>Sat, 25 Feb 2023 16:46:19 GMT</pubDate>
+            <content:encoded><![CDATA[<h1 id="infromed-search">Infromed Search</h1>
+]]></content:encoded>
+        </item>
+        <item>
+            <title><![CDATA[Uninformed search]]></title>
+            <guid>2a01556bd77243cdb9d406141b990156</guid>
+            <pubDate>Sat, 25 Feb 2023 16:45:56 GMT</pubDate>
+            <content:encoded><![CDATA[<h1 id="uninformed-search">Uninformed Search</h1>
+]]></content:encoded>
+        </item>
+        <item>
+            <title><![CDATA[AI - intro]]></title>
+            <guid>7db4a6d1738b415187e24c47656fd582</guid>
+            <pubDate>Sat, 25 Feb 2023 15:29:36 GMT</pubDate>
+            <content:encoded><![CDATA[<p>AI is a field  with a lot of histroy and lot of applications. Many techniques such as state space search grew out of attempts in AI to make intellegent programs. Thinking about thinking is a difficult task as you cannot remove yourself from the thought process. Yet many AI programs take there inspiration from human resoning processes. There are three ways we can think about how humans think</p>
+<ol>
+<li>Introspection - trying to catch our own thoughts as they go by</li>
+<li>phycoogy experiments - by observing other people and how they act in an expereiment</li>
+<li>brain imageing - there by observing how the brain responds to certain stimuli and</li>
+</ol>
+<p>More broadly the field of cognative science uses AI techniques as well as traditional science to try uncover the inner workings of intellegence.</p>
+<p>my personal  view is that intellgence is a emergent effect of sufficechntly complex systems with a goal and exsists on a spectrum . For example a dog is intellegent but<br />
+There have been many attempts to make intellegent programs but the holy grail of AGI is still out of reach. Some of these techniques include</p>
+<ol>
+<li>logic based approaches - use rules of logic as to solve a problem stated in logical notation. This technique has traditionally domniated as we view logic as an essential part of intelegence itself. These can also thought of as 'rationalist approaches'.</li>
+<li>evoltionary approaches - create a generation of programs that can repoduce themselves keeping desireble traits while undesireble traits 'die out'. The idea being that natruel selection applied to programs can bring about intellegence. They use genetic algorithms</li>
+<li>connectionist approaches that try to understand intellegence through the connection of nurons. The predominat work in the field is the mapping of the conectome of C elegans.</li>
+<li>Agent based approaches, modelleing intellegence through the interactions of a sociaety agents in the hope that they are more intellegent than the sum of there parts</li>
+<li>others...</li>
+</ol>
+<p>More recently techniques in Machine Leanring have been applied to AI problems such as computer vision and Natruel langugae processing. These are invaluvble techniques in the contruction of an otellegfent systems. Deep nural networks can be used as blackboxes that perfrom complex function for example turning images into textual representatations and vis vera. DNN's are determinist in the sense that provided with the same input they will produce the same result. I beleive a truly intellegent program would have to include some stochatic process otherwise there just very impressive mappings.</p>
+<p>The first logic based approaches automated theorm solvers<br />
+<a title="https://en.wikipedia.org/wiki/Automated_theorem_proving" href="https://en.wikipedia.org/wiki/Automated_theorem_proving">https://en.wikipedia.org/wiki/Automated_theorem_proving</a><br />
+which are pretty  cool.</p>
+<p>Links:</p>
+<p>uninformed state based search : <a href="/article/uninformed-search">Uninformed search</a></p>
+<p>informed state based search : <a href="/article/infromed-search">Infromed search</a></p>
+<p>agents : <a href="/article/agents">Agents </a></p>
+<p>Ref : Artificial Intellligence A moderd approach by Stuart Russell and Peter Norvig ,  page 1-</p>
+]]></content:encoded>
+        </item>
+        <item>
+            <title><![CDATA[AP]]></title>
+            <guid>39e48a5cad74411fa19968731f9b66fc</guid>
+            <pubDate>Tue, 27 Sep 2022 13:04:52 GMT</pubDate>
+            <content:encoded><![CDATA[<p>timis# project log</p>
+<h2 id="week-1">week 1</h2>
+<ul>
+<li>project 1 sailor jargen to mini c (no macros or structs) OR project 2 plot functions of the for y = f(x) or z = f (x, y)</li>
+</ul>
+<p>1x^1 + 2x^2 - 2x^3</p>
+<ul>
+<li>sign 0<br />
+1x coeeficent 1<br />
+^1 power 2<br />
+( 3<br />
+) 4</li>
+</ul>
+<p>1x^1 + 2x^2 - 2x^3</p>
+<p>symtable<br />
+[0, 1, 1, 0, 2, 2, 1, 2, 3]<br />
+token-table<br />
+[0, 1 , 2 , 0, 1 ,2, 0, 1, 2]</p>
+<p>1 1 + 2 2 - 2 3<br />
+poly = len<br />
+[1,2,3] coefficent<br />
+[1,2,3] power<br />
+[1,1,0] sign</p>
+<p>[-10 .. 10] input<br />
+[] output</p>
+<p>for x in input:<br />
+for<br />
+written some BNF to represent the polynomial and defined the interger id's for the tokens in lexer.fs</p>
+<p>//BNF Rules<br />
+&lt;digit&gt; ::= 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9<br />
+&lt;int&gt; ::= &lt;digit&gt; | &lt;digit&gt; &lt;int&gt;<br />
+&lt;term&gt; ::= &lt;int&gt; | &lt;int&gt;x | &lt;int&gt;x^&lt;int&gt;<br />
+&lt;poly&gt; ::= &lt;term&gt; + &lt;term&gt; | &lt;term&gt; - &lt;term&gt; | &lt;term&gt; + &lt;poly&gt; | &lt;term&gt; - &lt;poly&gt;</p>
+<p>and example parse tree for the input string<br />
+1 + 2x - 3x^2 + 4x^3 - 5x^4</p>
+
+				<div>
+					
+					<pre class="mermaid">graph TB;
+    poly--&gt;term1[term];
+        term1--&gt;int1[int]
+        int1--&gt;terminal1[1]
+        poly--&gt;sign1[+]
+        poly--&gt;poly1[poly];
+ 	 poly1--&gt;term2[term]
+     term2--&gt;terminal2[2x]
+     poly1--&gt;sign2[-]
+     poly1--&gt;poly2[poly]
+     poly2--&gt;term3[term]
+     term3--&gt;terminal3[3x^2]
+     poly2--&gt;sign3[+]
+     poly2--&gt;poly3[poly]
+     poly3--&gt;term4[term]
+     term4--&gt;terminal4[4x^3]
+     poly3--&gt;sign[-]
+     poly3--&gt;poly4[poly]
+     poly4--&gt;term5[term]
+     term5--&gt;terminal5[5x^4]
+
+
+
+
+
+</pre>
+				</div>
+			<p>The project we will be doing is project one.<br />
+a source program written in our own language and compiled into a c binary.<br />
+there may or may nor be an intermidiate pascal layer</p>
+<h2 id="pascal-bnf">pascal bnf</h2>
+<p><program class="jop-noMdConv">::= Program <id class="jop-noMdConv">( <id class="jop-noMdConv">) ; <block class="jop-noMdConv">.<br />
+| Program <id class="jop-noMdConv">( <id class="jop-noMdConv">, <id class="jop-noMdConv">) ; <block class="jop-noMdConv">.</block></id></id></id></block></id></id></program></p>
+<p><id class="jop-noMdConv">::= letter letter<br />
+| letter digit<br />
+| letter</id></p>
+<p>&lt;unsinged_interger&gt; ::= digit<br />
+| digit</p>
+<p><block class="jop-noMdConv">::= begin <statment class="jop-noMdConv">end</statment></block></p>
+<p><statement class="jop-noMdConv">::= begin <statment class="jop-noMdConv">end<br />
+| if <expression class="jop-noMdConv">then<statement class="jop-noMdConv"><br />
+| if <expression class="jop-noMdConv">then <statement class="jop-noMdConv">else<statement class="jop-noMdConv"><br />
+| while <expression class="jop-noMdConv">do</expression></statement></statement></expression></statement></expression></statment></statement></p>
+<p><expression class="jop-noMdConv">::= &lt;simple_expression&gt;<br />
+| &lt;simple_expression&gt; &gt; &lt;simple_expression&gt;<br />
+| &lt;simple_expression&gt; &lt; &lt;simple_expression&gt;<br />
+| &lt;simple_expression&gt; &lt;= &lt;simple_expression&gt;<br />
+| &lt;simple_expression&gt; &gt;= &lt;simple_expression&gt;</expression></p>
+<p>&lt;simple_expression&gt; ::= +<term class="jop-noMdConv"><br />
+| -<term class="jop-noMdConv"><br />
+| + <term class="jop-noMdConv">-<term class="jop-noMdConv"><br />
+| + <term class="jop-noMdConv">+<term class="jop-noMdConv"><br />
+| - <term class="jop-noMdConv">+<term class="jop-noMdConv"><br />
+| - <term class="jop-noMdConv">-<term class="jop-noMdConv"><br />
+<term class="jop-noMdConv">::=<factor class="jop-noMdConv"><br />
+| <factor class="jop-noMdConv">*<factor class="jop-noMdConv"><br />
+| <factor class="jop-noMdConv">/<factor class="jop-noMdConv"><br />
+| <factor class="jop-noMdConv">div<factor class="jop-noMdConv"><br />
+| <factor class="jop-noMdConv">mod</factor></factor></factor></factor></factor></factor></factor></factor></term></term></term></term></term></term></term></term></term></term></term></p>
+<p><factor class="jop-noMdConv">::= &lt;unsigned_constant&gt;<br />
+| ( <expression class="jop-noMdConv">)</expression></factor></p>
+<p>&lt;unsigned_constant&gt; ::= &lt;unsinged_number&gt;<br />
+&lt;unsinged_number&gt; ::= &lt;unsinged_interger&gt;</p>
+<p>As non left recursive:</p>
+<p>No longer doing eso_lang. now only doing a pascal compiler</p>
+<p>Revision:</p>
+<p>Lecture 5 parallel computing.</p>
+<p>Paralell programming also know as high performance computing is becoming increasingly important and concerns writing programs that can make the most of the resources given to it. For example many programs accelerate computation of some task in the program by performing it on the GPU</p>
+<p>Amdahls law</p>
+<p>In words: the effect of imporving the speed of a part of the system, on the overall system, depends on the signinfigance of the part and its speed up.</p>
+<p>Assume we have an application that takes time T_old on a certain system  of which a fraction alpha of the total time is sped up with a factor k.</p>
+<p>(1) T_new = (1-alpha)T_old + (alpha*T_old)/k</p>
+<p>its almost like a linear interpolation accept we devide by k. where alpha is the fracton of speed up and k is the speed up factor.</p>
+<p>we can rewrite (1) by factorising T_old out</p>
+<p>T_new = T_old((1-alpha) + alpha/k)</p>
+<p>T_new/T_old = (1-alpha) + alpha/k)</p>
+<p>S = speedup = T_old/T_new = 1/((1-alpha) + alpha/k)</p>
+<p>Assume a program component contributes 6-% of the total time as in sped up by a factor of 3. The over all speedup is/</p>
+<p>1/(1-0.6 + 0.6/3)  = 1.6666</p>
+<p>so the speed up is 1.67. less than you might expect. can be ead up as you have sped up 60% of the og problem by a factor of 3. In the sense hear the 60% can be sped up corssosponds to what can be paralellised. Hoever this also works with optimisation.  When k -&gt; infinte the speed up s 2.5 for the case where 60% is paralellizable.</p>
+<p>Parallelism is common in nature and society.</p>
+<p>serailistionis the aact of putting a set of operations in specific sequential order.</p>
+<p>Serialisation is now in desprate need of revsion due to the increasing paralell nature of modern day processors.</p>
+<p>Modern programming languages and tools still suffer from serial traps. i.e construction makes often unnecessary serial assumptions.  To avoid these traps we muct learn to think paralell an learn how to recognise serial traps.  Parallel algorithms are constraind by the algorithms span. The part of an algorithm that cannot be paralellised is called the span. the span is the processing time of the longest sequence of tasks that must be performed serially.</p>
+<p>The span determins the limit of how fast a paralell algorithm can run. Another bottle neck with regaurds to Per preocessor performance is memory action.</p>
+<p>shared memory is conveient but may have communication costs based on the relative location of the each processor.</p>
+<p>span is also known as the critical path. mutex's and semaphores are used for communication. they slow the parallelism down. Total time to complete a task is called the latency. the rate at which a series of tasks can be computed is the throughput.  For big systems the power consumption becomes important.</p>
+<p>Speedup related the latency of one hardware nuuit or 'worker' versus p workers.</p>
+<p>S = T1 / Tp</p>
+<p>Where T1 is the latence of one worker and Tp is the latency of p workers.  Effichency is speed up devided by number of workers.</p>
+<p>E= S/P = T1/TP*P</p>
+<p>An alogrithm that runs p times faster on p processirs is said to exhibit linear speedup.it's rarley ahcieves usually we have a sub linear speedup. However occasionally super linear speedup is achieveble when the task is more effeichent using a paralell algorith.</p>
+<p>power consumption is proportionl to the cube of the frequency.</p>
+<p>F# lecture notes lecture 3</p>
+<p>a program in a fuctional/decarative language defines an expression which is the solution to a set of problems. This expression coprises of the evaultaion of functions whilst avoiding state and mutable data.</p>
+<p>In contrast an imprative laguage uses a list of command to be executed in a partucular order where state and mutable data lay the basis for storeing intermeiate and final results.</p>
+<p>recusrion is a key contruct in functional languages, recursive calls replace the usual for and while loops from imperative languages.</p>
+<p>A few key fetures of f#</p>
+<p>1. functions are just another type of value, functions are first class</p>
+<p>2. function composistion and pipelining</p>
+<p>3. Automatic type inference</p>
+<p>4. pattern matching support</p>
+<p>5. Recursion</p>
+<p>6. Collection types for immutable data</p>
+<p>7. lambda expressions.</p>
+<p>the let keyword binds an immutble value or function to a symbol/ idetifier. They are different from normal varibles in the following respect. Unless declared mutable they are imutable. They are temporally tied to there value e.g if you define</p>
+<p>let a = 10</p>
+<p>a + 10</p>
+<p>let b = a + 2</p>
+<p>whats the value of b?</p>
+<p>12 not 22 because</p>
+<p>There is also the concept of a partial application, this is where you provide some but not all of the arguments to a function. the result is  a new function which has those arguments set as defaults.  It is for this reason the type signatures in f# are displayed as arrow tereparted lists e.g</p>
+<p>let addc inta intb = inta + intb</p>
+<p>has the signature</p>
+<p>int -&gt; int -&gt; int</p>
+<p>the type to the RHS of the final arrow is the return type. All other types represnt the  types of the input arguments . we can make a new let binding as a partial application like</p>
+<p>let add5 = addc 5</p>
+<p>add5 now has the signature</p>
+<p>int -&gt; int because the add5 is the same as addc but with the input argument inta set to 5.</p>
+<p>discrimanted unions are like enums witch can be assocaited with data values.  a simple discrimanted union may loop like</p>
+<p>type shape =</p>
+<p>| Circle</p>
+<p>| Square</p>
+<p>| Triangle</p>
+<p>here circle square and triangle are all given an identifer. Circle, Square and Trianlge become like cases of a Shape enum. they can be matches again with a simple pattern match as follows.</p>
+<p>let matchexp s =</p>
+<p>match s with</p>
+<p>| Circle -&gt; printfn "%s" " hello circle"</p>
+<p>| Square -&gt; printfn "%s" "hello square"</p>
+<p>| Triangle -&gt; printfn "%s" "hello triangle"</p>
+<p>we can call matchexp with a Trignle Circle or Square and the corrosponding function in the match block will be called THey are also more powerful than simple enums in the following reguards.</p>
+<p>1. they can contain data. following the identifier name (Circle Square or triangle)  with an of keywork lets you define the data that exsists on the type e.g</p>
+<p>type Shape</p>
+<p>| Circle of double * double</p>
+<p>| Square of double * double * double</p>
+<p>| triangle of double * double * string</p>
+<p>Fucntional programming is driven by the excuttion of expressions. anything we need to remember is taken with the fucntion through recursion and parameter partseing. imperative langauges have statments which are commands to be executed in a particular order.</p>
+<p>Functional languages are closley related to the labmda calculus. They have the advantage of being able to run concurrently and avoiding side effects caused by static varibles/ libaries. Avoiding state and mutable data is a key concept of functional lalnguages.</p>
+<p>Optimisation</p>
+<p>consider</p>
+<p>int foo(int)</p>
+<p>int func1 (int x) { return foo(x) + foox(x) + foo(x)}</p>
+<p>can we do</p>
+<p>int func1 (int x) { return 3*foo(x)}</p>
+<p>no if the function body of foo uses statics it may not reurn the same val for each execution even when called on the same input so we can optimise like this. static varibles stay allocated even when the function is popped of the stack</p>
+<p>Loop unrolling</p>
+<p>Removal of Loop invarients</p>
+<p>Removal of costly function calls from loops including loop arguments. using strlen in an for is order n^2 for exaple (in c ) C</p>
+<p>Intermeidate code -</p>
+<div><pre class="hljs"><code><span class="hljs-function"><span class="hljs-type">float</span> <span class="hljs-title">InnProduct</span> <span class="hljs-params">(<span class="hljs-type">float</span> \*A, <span class="hljs-type">float</span> \*B)</span>
+</span>{
+     <span class="hljs-type">float</span> iprod = <span class="hljs-number">0</span>;
+     <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i =<span class="hljs-number">0</span>; i &lt; <span class="hljs-number">20</span>; ++i)
+     	{
+     	iprod += A[i] * B[i];
+     	}
+    <span class="hljs-keyword">return</span> iprod;
+}</code></pre></div>
+<p>machine code</p>
+<ol>
+<li>iprod := 0</li>
+<li>i := 0</li>
+<li>T1 := 4*i  //step size, cos 1 float is 4 words (bytes) long. will be idx</li>
+<li>T2 := addr(A)  // set T2 to the address of A</li>
+<li>T3 := T2[T1] // set the its in A to address T1</li>
+<li>T4 := addr(B)</li>
+<li>T5 := T4[T1]</li>
+<li>T6 := T[3] * T[T5]</li>
+<li>iprod = iprod + T6</li>
+<li>i := i+1</li>
+<li>if i&lt; 20 go to (3)</li>
+</ol>
+<p>optimized vode</p>
+<p>we remove the multiplcation and itteration thats done to index each float in addr(A) and addr(B) . we remove these from the loop consisteing of the statements between 3 and 11.</p>
+<ol>
+<li>iprod = 0</li>
+<li>T2 = addr(A) -4 // in the case of the first loop T1=4 after 5 so set back</li>
+<li>T4 = addr(B) -4 // in the case of the first loop T1=4 after 5 so set back</li>
+<li>T1 = 0</li>
+<li>T1 = T1 + 4</li>
+<li>T3 = T2[T1]</li>
+<li>T5 = T4[T1]</li>
+<li>T6 = T3 * T5</li>
+<li>iprod = iprod+T6</li>
+<li>if T1 &lt;= 76 goto 5 / replaced i*4</li>
+</ol>
+<p>Example 2</p>
+<div><pre class="hljs"><code><span class="hljs-keyword">while</span> ( a &gt; b &amp;&amp; a &lt; <span class="hljs-number">2</span> * b+<span class="hljs-number">1</span> ) a=a+<span class="hljs-number">1</span>;
+
+<span class="hljs-keyword">while</span> ( [<span class="hljs-keyword">id</span>,p1] &gt; [<span class="hljs-keyword">id</span>,p2] &amp;&amp; [<span class="hljs-keyword">id</span>,p1] &lt; [<span class="hljs-keyword">const</span>, p3] * [<span class="hljs-keyword">id</span>,p2] + [<span class="hljs-keyword">const</span>,p4])
+[<span class="hljs-keyword">id</span>,p1] = [<span class="hljs-keyword">id</span>,p1] + [<span class="hljs-keyword">const</span>, p4]</code></pre></div>
+<p>intermidiate code</p>
+<ol>
+<li>L1 : if a &gt; b goto L2</li>
+<li>goto L3</li>
+<li>L:2 T1 := 2*b</li>
+<li>T2 := T1 + 1</li>
+<li>if a &lt; T2 goto L4</li>
+<li>goto L3</li>
+<li>L4 : a:= a+1</li>
+<li>goto L1</li>
+<li>L3<br />
+optimized code<br />
+// we reverse the condition to save us from calling an additional goto<br />
+intermidiate code.</li>
+<li>L1 : if a &lt;= b goto L3</li>
+<li>L:2 T1 := 2*b</li>
+<li>T2 := T1 + 1</li>
+<li>if a &gt;= T2 goto L3<br />
+6.: a:= a+1</li>
+<li>goto L1</li>
+<li>L3<br />
+because ites executed line by line we can revert the condityion and jump ouit if it isnt met istead of using exxtra gotos.</li>
+</ol>
+<p>Matrix multiplication can be sped up because to compute the value of a celll in the output, you only need 1 row and 1 colnm of the input. so this row and colunm can be put in shared memory which is more perforrmant than local memory.</p>
+<p>AB = [ 1 0 -2      [ 0 3<br />
+0 3 -1 ]    -2 -1<br />
+0 4]</p>
+<p>3+2 * (4 + 7) +3 * 1</p>
+]]></content:encoded>
+        </item>
+        <item>
+            <title><![CDATA[dsa finals revsion]]></title>
+            <guid>e7efa45610fb4216994a8dc82e018052</guid>
+            <pubDate>Tue, 25 May 2021 14:45:26 GMT</pubDate>
+            <content:encoded><![CDATA[<p>formative test<br />
+What is a trie data structure?<br />
+A trie data structure is a tree with the constraint that all child nodes are selected from some finite alphabet. Atree is a data structure where a prent node is liked to child nodes liknked to further decendants with the constrain that u can not form a loop of nodes and edges.<br />
+b) use cases for tries<br />
+Routing tables store the prefix of a ip address represensting a network interface in which they can forward packets to is an ip being looked up shares that prefix. Trie data structures are used to match ip's to the ip prefix's(network) where the host that matches the whole id can be found.<br />
+Another use is auto-complete/spellcheing a document. Each word in a dictionary can be represesnted as a line of decendants in a trie. Words with the same prefix witll all follow the same path but split of too another node when words first differ. If when inputing letters u reach a branch f the tree that has no more braches on it or its desencdents then u can 'autosomplete' that word</p>
+<p>Giiven the set of keys<br />
+s-{31,41,316,3166,44,4456,3}<br />
+draw the tree asocsiated</p>
+
+				<div>
+					
+					<pre class="mermaid">graph TD;
+root[Root]--&gt;3[3];
+root--&gt;4;
+4--&gt;1;
+4--&gt;4_[4]
+4_--&gt;5
+5--&gt;6
+3--&gt;1_[1];
+1_--&gt;6_[6];
+6_[6]--&gt;6__[6]
+</pre>
+				</div>
+			<p>A Binary Tree is a Tree with the constrain that any node in the tree must have 0, 1 or 2 children<br />
+given the tree</p>
+
+				<div>
+					
+					<pre class="mermaid">graph TD
+A--&gt;B
+A--&gt;G
+B--&gt;C
+B--&gt;E
+C--&gt;D
+E--&gt;F
+</pre>
+				</div>
+			<p>Give the pre,post and inorder traversal of this tree<br />
+pre: node - left- right<br />
+post: left - right - ndoe<br />
+in: left-node-right</p>
+<ul>
+<li>Preorder : ABCDEFG</li>
+<li>Postorder: DCFEBGA</li>
+<li>Inorder : DCBFEBAG</li>
+</ul>
+<p>What is a binary search tree</p>
+<p>A binary search tree is a binary tree with the constrain that the nodes in the tree are comparable and fore any node in the tree a node greater than it is allways a right child and and node less than it is to the left.</p>
+<p>How to insert a node into a BST?</p>
+<ul>
+<li>start from the root node, compare it to the node, if less follow the left subtree, if more follow the right.</li>
+<li>continue down the tree untill you find a parent with 1 or no children. If the node is less than that node but that child has a left sub child then keep going down the tree as before. Is its less than the node and the left child is null insert it there.same for the right but mirrirored.</li>
+</ul>
+<p>What is a height balances BST</p>
+<p>A height balanced BST is a BST where the height differnece between any nodes left and right subtrees (its balance) is either -1, 1 or 0.</p>
+<p>Use a AVL BST to describe a left and right rotation</p>
+
+				<div>
+					
+					<pre class="mermaid">graph TD
+10--&gt;15
+10--&gt;5
+</pre>
+				</div>
+			<p>To left rotate 10 is must move down a level and to the left</p>
+
+				<div>
+					
+					<pre class="mermaid">graph TD
+15--&gt;10
+10--&gt;5
+</pre>
+				</div>
+			<p>To left rotate 10 is must move down a level and to the right</p>
+
+				<div>
+					
+					<pre class="mermaid">graph TD
+5--&gt;10
+10--&gt;15
+</pre>
+				</div>
+			<p>Insert 9 elemsents into the BST and rebalance</p>
+
+				<div>
+					
+					<pre class="mermaid">graph TD
+10--&gt;15
+10--&gt;5
+</pre>
+				</div>
+			<p>add(6,9,34,7,93,6,87,2, 45)<br />
+needs to be drawn to keep ordering correct</p>
+]]></content:encoded>
+        </item>
+    </channel>
+</rss>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<link rel="stylesheet" href="/_assets/main.css" />
+
+    <title>N tile - notes</title>
+  </head>
+  <body>
+    <div class="main">
+      <nav class="navigation">
+        <a href="/">notes</a>
+      </nav>
+      <article>
+        <header>
+          <h1 class="article-title">N tile</h1>
+          <div class="article-info">
+            <div>
+              <span
+                >Created At：<time datetime="1677344895933"
+                  >2023-02-25 17:08</time
+                ></span
+              >
+              <span
+                >Updated At：<time datetime="1677345460261"
+                  >2023-02-25 17:17</time
+                ></span
+              >
+            </div>
+            
+          </div>
+        </header>
+        <div class="article-content markdown-body"><p>N tile</p>
+<p>The N tile is a simple game where you have a grid of blocks with one blank, you move the blank around and in the process generate diffierent configuratiosn  of the blocks in the grip.</p>
+<p>Chrismass crackers oft contain a 3-puzzle or 4-puzzle with a chirmass themed picture on it as a prize.</p>
+<p>You can check if a n puzzle is solvable by counting the number of inverions in the initial state. If its even the puzzle is solvable, if its odd the puzzle is unsolvable.</p>
+<p>transistions or moves involve sliding a block into the postition of the blank, though in practice it's easier to think of moving the blank around the board.</p>
+<p>Consider this example where the blank is represneted as a 0.</p>
+<table>
+<thead>
+<tr>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>3</td>
+<td>4</td>
+<td>5</td>
+</tr>
+<tr>
+<td>6</td>
+<td>7</td>
+<td>8</td>
+</tr>
+</tbody>
+</table>
+<p>there are two pssible transistions from this state, you could slide the 1 tile left ot the 3 tile up yielding the sucsessors</p>
+<table>
+<thead>
+<tr>
+<th>1</th>
+<th>0</th>
+<th>2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>3</td>
+<td>4</td>
+<td>5</td>
+</tr>
+<tr>
+<td>6</td>
+<td>7</td>
+<td>8</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>3</th>
+<th>1</th>
+<th>2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>4</td>
+<td>5</td>
+</tr>
+<tr>
+<td>6</td>
+<td>7</td>
+<td>8</td>
+</tr>
+</tbody>
+</table>
+</div>
+      </article>
+    </div>
+  </body>
+</html>

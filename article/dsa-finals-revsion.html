@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<link rel="stylesheet" href="/_assets/main.css" />
+
+    <title>dsa finals revsion - notes</title>
+  <style>.mermaid { background-color: white; width: 640px; }</style></head>
+  <body>
+    <div class="main">
+      <nav class="navigation">
+        <a href="/">notes</a>
+      </nav>
+      <article>
+        <header>
+          <h1 class="article-title">dsa finals revsion</h1>
+          <div class="article-info">
+            <div>
+              <span
+                >Created At：<time datetime="1621953926159"
+                  >2021-05-25 15:45</time
+                ></span
+              >
+              <span
+                >Updated At：<time datetime="1622157003008"
+                  >2021-05-28 00:10</time
+                ></span
+              >
+            </div>
+            
+          </div>
+        </header>
+        <div class="article-content markdown-body"><p>formative test<br />
+What is a trie data structure?<br />
+A trie data structure is a tree with the constraint that all child nodes are selected from some finite alphabet. Atree is a data structure where a prent node is liked to child nodes liknked to further decendants with the constrain that u can not form a loop of nodes and edges.<br />
+b) use cases for tries<br />
+Routing tables store the prefix of a ip address represensting a network interface in which they can forward packets to is an ip being looked up shares that prefix. Trie data structures are used to match ip's to the ip prefix's(network) where the host that matches the whole id can be found.<br />
+Another use is auto-complete/spellcheing a document. Each word in a dictionary can be represesnted as a line of decendants in a trie. Words with the same prefix witll all follow the same path but split of too another node when words first differ. If when inputing letters u reach a branch f the tree that has no more braches on it or its desencdents then u can 'autosomplete' that word</p>
+<p>Giiven the set of keys<br />
+s-{31,41,316,3166,44,4456,3}<br />
+draw the tree asocsiated</p>
+
+				<div>
+					
+					<pre class="mermaid">graph TD;
+root[Root]--&gt;3[3];
+root--&gt;4;
+4--&gt;1;
+4--&gt;4_[4]
+4_--&gt;5
+5--&gt;6
+3--&gt;1_[1];
+1_--&gt;6_[6];
+6_[6]--&gt;6__[6]
+</pre>
+				</div>
+			<p>A Binary Tree is a Tree with the constrain that any node in the tree must have 0, 1 or 2 children<br />
+given the tree</p>
+
+				<div>
+					
+					<pre class="mermaid">graph TD
+A--&gt;B
+A--&gt;G
+B--&gt;C
+B--&gt;E
+C--&gt;D
+E--&gt;F
+</pre>
+				</div>
+			<p>Give the pre,post and inorder traversal of this tree<br />
+pre: node - left- right<br />
+post: left - right - ndoe<br />
+in: left-node-right</p>
+<ul>
+<li>Preorder : ABCDEFG</li>
+<li>Postorder: DCFEBGA</li>
+<li>Inorder : DCBFEBAG</li>
+</ul>
+<p>What is a binary search tree</p>
+<p>A binary search tree is a binary tree with the constrain that the nodes in the tree are comparable and fore any node in the tree a node greater than it is allways a right child and and node less than it is to the left.</p>
+<p>How to insert a node into a BST?</p>
+<ul>
+<li>start from the root node, compare it to the node, if less follow the left subtree, if more follow the right.</li>
+<li>continue down the tree untill you find a parent with 1 or no children. If the node is less than that node but that child has a left sub child then keep going down the tree as before. Is its less than the node and the left child is null insert it there.same for the right but mirrirored.</li>
+</ul>
+<p>What is a height balances BST</p>
+<p>A height balanced BST is a BST where the height differnece between any nodes left and right subtrees (its balance) is either -1, 1 or 0.</p>
+<p>Use a AVL BST to describe a left and right rotation</p>
+
+				<div>
+					
+					<pre class="mermaid">graph TD
+10--&gt;15
+10--&gt;5
+</pre>
+				</div>
+			<p>To left rotate 10 is must move down a level and to the left</p>
+
+				<div>
+					
+					<pre class="mermaid">graph TD
+15--&gt;10
+10--&gt;5
+</pre>
+				</div>
+			<p>To left rotate 10 is must move down a level and to the right</p>
+
+				<div>
+					
+					<pre class="mermaid">graph TD
+5--&gt;10
+10--&gt;15
+</pre>
+				</div>
+			<p>Insert 9 elemsents into the BST and rebalance</p>
+
+				<div>
+					
+					<pre class="mermaid">graph TD
+10--&gt;15
+10--&gt;5
+</pre>
+				</div>
+			<p>add(6,9,34,7,93,6,87,2, 45)<br />
+needs to be drawn to keep ordering correct</p>
+</div>
+      </article>
+    </div>
+  <script src="/_markdown_plugin_assets/mermaid/mermaid.min.js"></script>
+<script src="/_markdown_plugin_assets/mermaid/mermaid_render.js"></script></body>
+</html>
