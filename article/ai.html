@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<link rel="stylesheet" href="/_assets/main.css" />
+
+    <title>AI - notes</title>
+  <link rel="stylesheet" href="/_markdown_plugin_assets/katex/katex.css" />
+<link rel="stylesheet" href="/_markdown_plugin_assets/highlight.js/atom-one-light.css" /><style>.mermaid { background-color: white; width: 640px; }</style></head>
+  <body>
+    <div class="main">
+      <nav class="navigation">
+        <a href="/">notes</a>
+      </nav>
+      <article>
+        <header>
+          <h1 class="article-title">AI</h1>
+          <div class="article-info">
+            <div>
+              <span
+                >Created At：<time datetime="1631209915123"
+                  >2021-09-09 18:51</time
+                ></span
+              >
+              <span
+                >Updated At：<time datetime="1637658023577"
+                  >2021-11-23 09:00</time
+                ></span
+              >
+            </div>
+            
+          </div>
+        </header>
+        <div class="article-content markdown-body"><p>From the course below</p>
+<ul>
+<li><a title="https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-034-artificial-intelligence-fall-2010/" href="https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-034-artificial-intelligence-fall-2010/">https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-034-artificial-intelligence-fall-2010/</a></li>
+</ul>
+<h1 id="lecture-1-scope">Lecture 1 - scope</h1>
+<hr />
+<h1 id="lecture-3-tree-traversal">Lecture 3 - Tree traversal</h1>
+<hr />
+<p>Given a tree where each node has b children and the tree has a depth d then the nuber of nodes is given by<br />
+b^d an exponetial relationship. This limits how deep we can go. BFS ensures that any node is found in the minimum number of steps.</p>
+<p>DFS doesnt work for genral graphs, they can get stuck in loops in a graph.</p>
+<p>DFS is not very costley in memory unlike BFS</p>
+<h2 id="lecture-1">Lecture 1</h2>
+<hr />
+<p>What is AI. AI encompases different methods to get computers to act in an intelligent way. There are two sub problems:</p>
+<ol>
+<li>Learning and knowledge ccquisition.</li>
+<li>Problem solving with 'learned' knowledge</li>
+</ol>
+<p>AI and include</p>
+<ul>
+<li>Reasoning and Expert systems</li>
+<li>Data Science</li>
+<li>Theories and Model based AI</li>
+<li>Machine Leanring</li>
+<li>Visulations and Actions</li>
+</ul>
+<p>KR - Knowledge representation How does the machine store infomation for it to act on.</p>
+<p>NLP - Natrul Langugae Processing, useful for:</p>
+<ul>
+<li>Automatic speach recognition</li>
+<li>Text document analysis</li>
+<li>TTS and STT</li>
+<li>dialog systems - chatbots</li>
+<li>Machine translation</li>
+</ul>
+<p>Perception : sound and vision</p>
+<ul>
+<li>Perception is the ability to scense things in the sourroundings based on sensors.</li>
+<li>Speach recognition</li>
+<li>Object and face detection.</li>
+<li>Image classification</li>
+</ul>
+<h1 id="lecture-2-basic-state-based-search-methods">Lecture 2 - Basic State Based Search Methods.</h1>
+<hr />
+<p>State Space Representation</p>
+<p>The search method applied to a state space implicitly defines the space. What is state space? What are uninformed search techniques used for searching these spaces. The modeling of the problem defines the state space. These are good for problems with lots of complicated constrains.</p>
+<p>Often a solution to a problem is built, step by step from an initial condition.</p>
+<p>* the intermidiate configuratiions generated in the construction are called states.</p>
+<p>* The initial configuration is called the inital state</p>
+<p>* At each step of the construction you perform some operation to transform one state into another.</p>
+<p>* Transforming a state using an operation is called a move</p>
+<p>* You stop when you have found a state that provides a solution with a desired property. e.g the goal state.</p>
+<p>The disfficulty is there can be many alternative choices of operations at each step , and therefore , a considerbly number of possible branches of code execution.Some might be dead ends.</p>
+<p>Example 1 (n slideing tile)</p>
+<table>
+<thead>
+<tr>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>4</td>
+<td></td>
+<td>8</td>
+</tr>
+<tr>
+<td>5</td>
+<td>6</td>
+<td>7</td>
+</tr>
+</tbody>
+</table>
+<p>We could slide the right-middle tile Right to make a new state</p>
+<table>
+<thead>
+<tr>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>4</td>
+<td>8</td>
+<td></td>
+</tr>
+<tr>
+<td>5</td>
+<td>6</td>
+<td>7</td>
+</tr>
+</tbody>
+</table>
+<p>The Initial and Goal states are a certain arrangment of the tiles. Operations swap a tile with an adjacent tile either horizintally or vertically. R L U D are the different directions a tile can move. Some operations can't be used in certain configureations.</p>
+<p>It's good to think about moving the empty space instead of the tiles.</p>
+<p>The objective is to find a sequence of operations that take you from the inital state to the goal state. And potentialy find the shortest sequence.</p>
+<p>It's useful to think of this problem in a state space. A graph where each node is a sate/configuration of the above tiles.</p>
+<p>A graph of V={1,2,3} E={(1,2),(1,3)}<br />
+would look like:</p>
+
+				<div>
+					
+					<pre class="mermaid">graph LR
+1 --&gt; 2
+1 --&gt; 3
+
+</pre>
+				</div>
+			<p>A tile configuration will be represented by a list containg:</p>
+<ul>
+<li>The row index i and col index j of the blank tile</li>
+<li>the configuration of the tiles as a list of lists where each list within the list repsents a row. The blank tile will be represented by 0.<br />
+EG consider</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>4</td>
+<td></td>
+<td>8</td>
+</tr>
+<tr>
+<td>5</td>
+<td>6</td>
+<td>7</td>
+</tr>
+</tbody>
+</table>
+<p>could be represented as<br />
+[1,1, [2,1,6], [4,0,8], [7,5,3]]</p>
+<p>We can represent this in python consider the fucntion:</p>
+<div><pre class="hljs"><code><span class="hljs-attribute">def</span> move_blank(i,j,n):
+    <span class="hljs-attribute">if</span> i+<span class="hljs-number">1</span> &lt; n:
+        <span class="hljs-attribute">yield</span>(i+<span class="hljs-number">1</span>, j)
+    <span class="hljs-attribute">if</span> i-<span class="hljs-number">1</span> &gt;=<span class="hljs-number">0</span>:
+        <span class="hljs-attribute">yield</span>(i-<span class="hljs-number">1</span>, j)
+    <span class="hljs-attribute">if</span> j+<span class="hljs-number">1</span> &lt; n:
+        <span class="hljs-attribute">yield</span>(i, j+<span class="hljs-number">1</span>)
+    <span class="hljs-attribute">if</span>(j-<span class="hljs-number">1</span> &gt;=<span class="hljs-number">0</span>):
+        <span class="hljs-attribute">yield</span>(i, j-<span class="hljs-number">1</span>)
+        </code></pre></div>
+<p>yield will return the pair of numbers representing the new position of the blank tile. Whats the signifigance of yield. Yield willl return the pair but next time move_blank() is called it will continue from underneath the last yield. You can call this a generator. The state of the original table will be restored after yield.</p>
+<p>Example 2 n-queens</p>
+<p>Imagine a chess board, we want to plave queens on the chess born so that no queen can attack another. Queens can go any number of blocks up/down / left/right. They can also move diagonally.<br />
+We can out mroe than 8 queens on because theres only 8 cols/rows.</p>
+<p>A state space for the n queens problem may be defined as follows:</p>
+<ul>
+<li>A state represents an n x n board on which 0 &lt;= p &lt;= n queens are placed in cols 0,1,2...p-1 so they cannot attack eachother.</li>
+<li>The initail state is an empty board.</li>
+<li>An operation consists of putting a queen on the first unociupied col such that it cant attack other queens which are allready on the board.</li>
+<li>Goal states are states with n queens</li>
+</ul>
+<p>Yield is like a return but over the next iteration you continue after the yield you last executes. Its a form of iterator. Yield doesnt end the function.</p>
+<p>the move function in both examples define the state space. They also capture the rules/relations of the system being modeld.</p>
+<p>search methods are impoertant as they allow you to search these search spaces for the next move. They help with state move ordering.</p>
+<h2 id="lecture-3">Lecture 3</h2>
+<hr />
+<p>First we will look at rooted trees, e,g trees where each node has parents apart ftom the node at the top.<br />
+In a rooted tree eevery node must have 1 immidiate ancestor apart from the root.</p>
+<p>Rooted trees and directed acyclic graphs are search spaces useful for construction problems, where a move consists of adding elements to a set. Construction problems with an acyclic search space include.</p>
+<ol>
+<li>the 8 queen problem</li>
+<li>suduko</li>
+<li>the number game in countdown</li>
+</ol>
+<p>We know we can traverse trees breadth first or depth first. We wont be looking got cycles. This means we can't get back to a state after leaving it.<br />
+The main datastructure used to search a rooted tree is a list.</p>
+<ul>
+<li>OPEN : List of states that have been generated but not expanded.</li>
+<li>BFS - In this case open is a queue i.e a FIFO structure.</li>
+<li>DFS - in this case open is a stack e.g LIFO</li>
+</ul>
+<p>In BFS the nodes are explored in non-decreasing distance (in the number of arcs/edges) from the root node. E.g from the root node, look at all nodes in layer 1, then 2 then 3 etc. When looking at nodes in a layer look left to right.</p>
+<p>In DFS we go from the root node to down the layers to the bottom layers and work up going right to left.</p>
+<p>BFS gurantees that a closest goal (in the number of moves) is found.</p>
+<p>BFS works for any state space e.g genral class tho it may re-examine some states.<br />
+DFS doesnt work for cyclic graphs as you can get stuck in a loop.</p>
+<p>up to ai 4 lecture. + labsheet 2</p>
+<h2 id="lecture-4">Lecture 4</h2>
+<hr />
+<p>Best-First Search</p>
+<p>The search space is defined as follows.</p>
+<ul>
+<li>A state n iis a path from T to some city. f(n) is the length of this path.</li>
+</ul>
+<p>##Lecture 5</p>
+<p>min aung ai types</p>
+<p>Action Schema</p>
+<ul>
+<li>Actions are described A set of action schemas which define Actions(s) abnd Results(s,a)</li>
+</ul>
+<p>Action(Fly(p,from,to))<br />
+Precond At(p,from) and At()</p>
+<h2 id="lecture-5-state-space-search">Lecture 5 - State Space Search</h2>
+<hr />
+<p>State space search optimisation problems.</p>
+<ul>
+<li>Optimisation problems</li>
+<li>state representation</li>
+<li>binary search</li>
+<li>best-first seaach</li>
+<li>a star</li>
+<li>proof of a*</li>
+<li>IDA*</li>
+</ul>
+<p>Our goal is to find a state that minimises some function. Taking the nubmers game from countdown as an example: The rules are :</p>
+<ul>
+<li>select 6 numbered tiles, big or small values.</li>
+<li>a three digit random number is generated.</li>
+<li>The objective is to get as close to the awnser using each tile at more more than once each and * + - / operators are allowd.</li>
+</ul>
+<p>The states may be represented by a list of arithmetic expressions. The inital step is a set of 6 numbers.</p>
+<p>A move operation is defined as taking two numbers from the list, combinging them in an arithmetic operation and putting the result at the end of the list.</p>
+<p>A Goal is a state where the element in the head of the list is as close as possible to the target number. 2</p>
+<p>We can use binary search to speed up searching the state space for a suitable awnser. A pass amounts to searching for a solution such that abs(target - solution) &lt;= (low + high) /2 where low and high are the highest number at the head of the list and the lowest number in the head of the list.</p>
+<p>Each pass is solved using IDDFS (Iterative Deepening Depth First Search)</p>
+<p>The initial value of high is set to 999 as this is the highest posible 3 digigt number we can make. We do not need to store the path because only the first element in the headof a list is what we are intrested in. We do not need to test for cycling paths.</p>
+<p>We call the function that searches all the state spaces f(x). The minimul value of the function is 0 while the maxium is 999.<br />
+Best First Search in a genral search algorithm that searches a state space by explanding states , n, in a non decreasing order of a cost function f(n).</p>
+<p>Modified cases of best first search include</p>
+<ul>
+<li>Dijkstras algorithm. Where f(n) is the sum of arc costs along the path from the start node to node n.</li>
+<li>BFS where f(n) is simply the sum of the number of arcs from the start node to node n.</li>
+<li>A* f(n) also takes in to account an estimate of the cost of reaching a goal from node n.</li>
+</ul>
+<p>For BFS we use a prioirty queue. BFS applied to finding the shortest path bewtween two nodes. We retrive the node to exapand in order of value.</p>
+<p><img src="/_resources/b70ba1c760bb4656a5734c29a13c0a2e.PNG" /></p>
+<p>That means the first node we expland is G.yarmouth and the value for f(n) for Norwihch to G.Yarmouth is smaller than too any of the other edges comeing from norwich. However we can also see it makes a longer path to kings lynn. How to we fix this.</p>
+<p>The state space is modeld as follows:</p>
+<ul>
+<li>A state n is a path from T to some city. f(n) is the length of path n.</li>
+<li>The initial state is a path with a single node T.</li>
+<li>A move is the extension of a path ,n, by one leg. The cost of a move is c. The f(n) of the new path is f(n)+c</li>
+<li>A path is a goal state if it connects T to Kings lynn</li>
+<li>The first goal state found by best first search. It is exapanded down the smalles cost/ leg.</li>
+</ul>
+<p>Best first search will search all paths before searching for the shortest. It does not have a scence of direction. We can use the A* algorithm to give it a notion of what direction to go in.</p>
+<p>An algorithm that directs the search towards promising regions of the search space. These algorithms use a evalutation functions to estimate the likly hood that a given node is on the shortest path. A* is one such algorithm, whith some asumptions made A* will return the optimal solution.</p>
+<p>A* applied to the n tile problem where:</p>
+<div><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>f</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo><mo>=</mo><mi>g</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo><mo>+</mo><mi>h</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">f(n) = g(n) + h(n)
+
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em"></span><span class="mord mathnormal" style="margin-right:0.10764em">f</span><span class="mopen">(</span><span class="mord mathnormal">n</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em"></span><span class="mord mathnormal" style="margin-right:0.03588em">g</span><span class="mopen">(</span><span class="mord mathnormal">n</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em"></span><span class="mord mathnormal">h</span><span class="mopen">(</span><span class="mord mathnormal">n</span><span class="mclose">)</span></span></span></span></span></div>
+<p>where g(n) is the length of the path (or nubmer of operations) in the search tree from the start to the node n.<br />
+and h(n) is the number of misplaces tiles in the discription associated with n. i.e the number of tiles that are not at the same position in the current discription and the goal discription.</p>
+<p>f(n) becomes out evaulation function. h(n) here is apoximatly the number of moves left.</p>
+<p>When is A* optimal. An estimation function h(n) is admissable if for every state n , 0 &lt;= h(n) &lt;= h*(n) where h*(n) is the lower bound on the number of moves to go to a goal from n.<br />
+Ad addmissable hueristic never overestimates the coast to reach a goal.<br />
+if h is admissable the solution returned by A* is a goal with the smallest g value.</p>
+<p>When a state is explanded in BFS its placed in CLOSED and never expanded again e.g never placed in OPEN again.<br />
+The property of admissability does not gurarntee that a state placesd in CLOSE does not need to be re-examinded.<br />
+Hoewver if h is based on a distance function i.e h(n) = d(n,t) where t is the goal state then a state placed in closed deosnt need to be examind again.</p>
+<p>A distance function is a dfucntion that computes a distance. Consider a set of objects {o1,o2,o3,o4}. if a function distance function obeys the rules</p>
+<div><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>d</mi><mo stretchy="false">(</mo><mi>o</mi><mn>1</mn><mo separator="true">,</mo><mi>o</mi><mn>1</mn><mo stretchy="false">)</mo><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">d(o1,o1)  = 0
+
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em"></span><span class="mord mathnormal">d</span><span class="mopen">(</span><span class="mord mathnormal">o</span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mord mathnormal">o</span><span class="mord">1</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em"></span><span class="mord">0</span></span></span></span></span></div>
+<div><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>d</mi><mo stretchy="false">(</mo><mi>o</mi><mn>1</mn><mo separator="true">,</mo><mi>o</mi><mn>2</mn><mo stretchy="false">)</mo><mo>=</mo><mi>d</mi><mo stretchy="false">(</mo><mi>o</mi><mn>2</mn><mo separator="true">,</mo><mi>o</mi><mn>1</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">d(o1,o2) = d(o2,o1)
+
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em"></span><span class="mord mathnormal">d</span><span class="mopen">(</span><span class="mord mathnormal">o</span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mord mathnormal">o</span><span class="mord">2</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em"></span><span class="mord mathnormal">d</span><span class="mopen">(</span><span class="mord mathnormal">o</span><span class="mord">2</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mord mathnormal">o</span><span class="mord">1</span><span class="mclose">)</span></span></span></span></span></div>
+<div><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>d</mi><mo stretchy="false">(</mo><mi>o</mi><mn>1</mn><mo separator="true">,</mo><mi>o</mi><mn>2</mn><mo stretchy="false">)</mo><mo>+</mo><mi>d</mi><mo stretchy="false">(</mo><mi>o</mi><mn>2</mn><mo separator="true">,</mo><mi>o</mi><mn>3</mn><mo stretchy="false">)</mo><mo>&gt;</mo><mo>=</mo><mi>d</mi><mo stretchy="false">(</mo><mi>o</mi><mn>1</mn><mo separator="true">,</mo><mi>o</mi><mn>3</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">d(o1,o2) + d(o2,o3) &gt;= d(o1,o3)
+
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em"></span><span class="mord mathnormal">d</span><span class="mopen">(</span><span class="mord mathnormal">o</span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mord mathnormal">o</span><span class="mord">2</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em"></span><span class="mord mathnormal">d</span><span class="mopen">(</span><span class="mord mathnormal">o</span><span class="mord">2</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mord mathnormal">o</span><span class="mord">3</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em"></span><span class="mrel">&gt;=</span><span class="mspace" style="margin-right:0.2777777777777778em"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em"></span><span class="mord mathnormal">d</span><span class="mopen">(</span><span class="mord mathnormal">o</span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mord mathnormal">o</span><span class="mord">3</span><span class="mclose">)</span></span></span></span></span></div>
+<p>Obeying these rules means someting obeys the triangular inequality.</p>
+<p>An estinmate function is consistant if</p>
+<div><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>h</mi><mo stretchy="false">(</mo><mi>m</mi><mo stretchy="false">)</mo><mo>−</mo><mi>h</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo><mo>&lt;</mo><mo>=</mo><mi>k</mi><mo stretchy="false">(</mo><mi>m</mi><mo separator="true">,</mo><mi>n</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">h(m) -h(n) &lt;= k(m,n)
+
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em"></span><span class="mord mathnormal">h</span><span class="mopen">(</span><span class="mord mathnormal">m</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em"></span><span class="mord mathnormal">h</span><span class="mopen">(</span><span class="mord mathnormal">n</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em"></span><span class="mrel">&lt;=</span><span class="mspace" style="margin-right:0.2777777777777778em"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em"></span><span class="mord mathnormal" style="margin-right:0.03148em">k</span><span class="mopen">(</span><span class="mord mathnormal">m</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mord mathnormal">n</span><span class="mclose">)</span></span></span></span></span></div>
+<p>for all m,n where k(m,n) is the length of the shortest path between m and n.</p>
+<p>UNder the consistency assumption when A* inserts a node into CLOSED a shortesst path to that node has been found.</p>
+<h2 id="interative-deepening-a">Interative Deepening A*</h2>
+<ul>
+<li>A pass consists of explanding all nodes that have an f value less than or equal to a bound.</li>
+<li>The initial bound is the f value of the start state</li>
+<li>The next bound is the smallest f value of the start states generated in the searc but not expanded</li>
+<li>workds fine for f increasing along the search path (monotonic)</li>
+</ul>
+<p>Problem reduction represenetation.</p>
+<h1 id="lecture-6-expert-systems-reasoning-methods">Lecture 6 - Expert Systems &amp; Reasoning Methods</h1>
+<hr />
+<p>Aims and Objectives</p>
+<ul>
+<li>learn basic methods of knowledge representation</li>
+<li>expert systems</li>
+<li>rule based reasoning</li>
+<li>case based reasoning</li>
+<li>model based reasoning</li>
+</ul>
+<p>What is AI, Data, Information ,Raw facts, Knowledge??<br />
+Computers solving problems in a sinmlar way to humans.</p>
+<p>Data can be pasrsed into a more useful format creating information. Knowledge - facts information and skills aqquired through experience or education.</p>
+<p>Knowleedge represntation - KR<br />
+the presrestation od knowledge that enables AI's to solve real world problems. A sucsessful knowledgee representation should be understable by humans and machines. It should be able to make an AI reason and behave like is has knowledge.</p>
+<p>KR methods</p>
+<ul>
+<li>propositional logic - classic</li>
+<li>predicate logic - classic</li>
+<li>scripts - classic</li>
+<li>rules - classic</li>
+<li>frames</li>
+<li>semantic nets</li>
+<li>conceptual graphs</li>
+<li>OOM and XML</li>
+<li>ontology and web ontology language.</li>
+</ul>
+<p>production ruels consist of condition-action pairs. they have an If Then Else structure.</p>
+<p>A frame is a datastructure used to represent knowledge of a particular concept. roughly equivlent to the OO paradigm. Frames are a machine-useable formalisation of concepts or schemata.</p>
+<p>Production Rules PR<br />
+Working Memory WM<br />
+Recognise Act Engine RAE</p>
+<p>M model based system uses a mathmatical model that represents the structure and behaviours of the problem.device to do resoning.</p>
+<p>Commonly used in diagnosis of equipment malfuctions<br />
+Problems that can be well understood by mathmatical models.</p>
+<p>The expert system prdicts diagnosis based off discrpenecny between observed data and what a model pridicts.</p>
+<h1 id="lecture-8-gpu-progrmming-continued">lecture 8 GPU progrmming continued</h1>
+<p>CUDA and OpenCL.</p>
+<p>Summing two matracies of the same dimensions results a theird matrix of the same size. Each individual element wise addition could be done in paralel. Cuda has a hierarchy of threads. For a 2d problem like this we can use a 2d array of threads. We need to think about how we can break down our problem into blocks of CUDA threads. Block index and Block Dimnesion.</p>
+<div><pre class="hljs"><code>__global__ void <span class="hljs-constructor">MatAdd(<span class="hljs-params">float</span> <span class="hljs-operator">*</span><span class="hljs-params">a</span>, <span class="hljs-params">float</span><span class="hljs-operator">*</span> <span class="hljs-params">b</span>, <span class="hljs-params">float</span> <span class="hljs-operator">*</span><span class="hljs-params">c</span>, <span class="hljs-params">int</span> N)</span></code></pre></div>
+<h2 id="lecture-7-baysian-networks-for-reasoning-form-week-by-end-of-week">Lecture 7 - Baysian Networks for reasoning. - form week by end of week</h2>
+<p>Sources of uncertintity</p>
+<ul>
+<li>Incompletness - unknown values</li>
+<li>Incorectness - wrong / misleading data</li>
+<li>Inconsistency - contratditions</li>
+<li>Dynamics - information maay vary of time</li>
+<li>Too much information</li>
+</ul>
+<p>How can we compensate for these sources of uncertity. We need a system that can</p>
+<ul>
+<li>
+<p>Compensate for lack of knowledge</p>
+</li>
+<li>
+<p>resolve ambiguites and contraditions</p>
+</li>
+<li>
+<p>Update the knowledge known to the system</p>
+</li>
+<li>
+<p>Probablistic reasoning - using a basian network</p>
+</li>
+<li>
+<p>Default reasoning - reasoning by some common sense rules.</p>
+</li>
+<li>
+<p>Dempster-Shafer theory - using a belief function that quatifies difference between uncertenties you may have.</p>
+</li>
+<li>
+<p>Fuzzy logic dealing with vauge mbiguous values.</p>
+</li>
+<li>
+<p>Prior (or before) something exisists before we observe any evidence of a partticular event.</p>
+</li>
+<li>
+<p>Posterior something happened after we had observed something</p>
+</li>
+<li>
+<p>Unconitional proability - irrspectivie of other conditions</p>
+</li>
+<li>
+<p>conditional probability - respective of priors</p>
+</li>
+<li>
+<p>joint probability - two or more events occuring simulataneosly</p>
+</li>
+<li>
+<p>Evidence - something that has happened, an observation</p>
+</li>
+</ul>
+<p>P(A) the prioir probability that event A happens<br />
+P(A | B) the posterioir probability of A happeneing given B happened.<br />
+here P(B) is the 'evidence' that P(A) will happen.</p>
+<p>useful for diagnostic reasoning. e,g<br />
+P(cause | effect) = P(effect | cause) * P(cause) / P(effect)<br />
+P(flu | fever) - probaiblity of having the flu, given somsone has a fever.</p>
+<p>In the real wolrd we have more than one possible events that could happen.<br />
+Tha basysian updating rule: If a new evidence C emerged, then baysian theroum can using it to cauluclate the probability of A occuring gievn event B and C</p>
+<div><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>P</mi><mo stretchy="false">(</mo><mi>A</mi><mi mathvariant="normal">∣</mi><mi>B</mi><mo separator="true">,</mo><mi>C</mi><mo stretchy="false">)</mo><mo>=</mo><mi>P</mi><mo stretchy="false">(</mo><mi>A</mi><mo separator="true">,</mo><mi>B</mi><mo separator="true">,</mo><mi>C</mi><mo stretchy="false">)</mo><mi mathvariant="normal">/</mi><mi>P</mi><mo stretchy="false">(</mo><mi>B</mi><mo separator="true">,</mo><mi>C</mi><mo stretchy="false">)</mo><mo>=</mo><mi>P</mi><mo stretchy="false">(</mo><mi>A</mi><mi mathvariant="normal">∣</mi><mi>B</mi><mo stretchy="false">)</mo><mo>∗</mo><mi>P</mi><mo stretchy="false">(</mo><mi>C</mi><mi mathvariant="normal">∣</mi><mi>B</mi><mo separator="true">,</mo><mi>A</mi><mo stretchy="false">)</mo><mi mathvariant="normal">/</mi><mi>P</mi><mo stretchy="false">(</mo><mi>C</mi><mi mathvariant="normal">∣</mi><mi>A</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">P(A | B, C) =P(A, B ,C) / P(B,C) = P(A|B)*P(C| B,A)/P(C|A)
+
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em"></span><span class="mord mathnormal" style="margin-right:0.13889em">P</span><span class="mopen">(</span><span class="mord mathnormal">A</span><span class="mord">∣</span><span class="mord mathnormal" style="margin-right:0.05017em">B</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mord mathnormal" style="margin-right:0.07153em">C</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em"></span><span class="mord mathnormal" style="margin-right:0.13889em">P</span><span class="mopen">(</span><span class="mord mathnormal">A</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mord mathnormal" style="margin-right:0.05017em">B</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mord mathnormal" style="margin-right:0.07153em">C</span><span class="mclose">)</span><span class="mord">/</span><span class="mord mathnormal" style="margin-right:0.13889em">P</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.05017em">B</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mord mathnormal" style="margin-right:0.07153em">C</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em"></span><span class="mord mathnormal" style="margin-right:0.13889em">P</span><span class="mopen">(</span><span class="mord mathnormal">A</span><span class="mord">∣</span><span class="mord mathnormal" style="margin-right:0.05017em">B</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em"></span><span class="mord mathnormal" style="margin-right:0.13889em">P</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.07153em">C</span><span class="mord">∣</span><span class="mord mathnormal" style="margin-right:0.05017em">B</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mord mathnormal">A</span><span class="mclose">)</span><span class="mord">/</span><span class="mord mathnormal" style="margin-right:0.13889em">P</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.07153em">C</span><span class="mord">∣</span><span class="mord mathnormal">A</span><span class="mclose">)</span></span></span></span></span></div>
+<p>We arrive at this formula using chain rule.</p>
+<h2 id="independence">Independence</h2>
+<p>Events are indpendedt if P(A | B) == P(A) and P(B | A) == P(B)<br />
+aka events A and B have no bearing on eachother.</p>
+<p>We can calulate the joint probability (the probability bot events happen) by multiplying them.<br />
+P(A,B) = P(A | B)P(B) = P(A)*P(B)</p>
+<p>Conditional Independence:<br />
+Under some conditions some events might be indpened from eachother. Imagine A bian coin that lands of heads 0.7 of the time. Consider A as the first toll and B as the second.<br />
+A and B are not indpenedent as A has information about the coin. A is more likly to be heads.</p>
+<p>Baysian (Belife) Network<br />
+If we have a good representation of our problem and the varibles it concerns we can create a directed graph for reasoning under uncertity. A Baysian Network is a directed graph for reasoning.</p>
+<ul>
+<li>to represent conditional independence between vaibles</li>
+<li>to specify full joint probability distrocution<br />
+Also known as</li>
+<li>Belief network</li>
+<li>proabilistic network</li>
+<li>Casual Networks</li>
+</ul>
+<p>We update the piriors in a basysian network based on the evidence we are given. Propogation:</p>
+<ul>
+<li>Infere the probability of a node S in the belief network bt indirectly using the new evidence entered by a different node R that is not directly joined to S by a edge in the undirected graph.</li>
+</ul>
+<p>Casual reasoning or pridictive reasoning is to infere top down effectes.</p>
+<p>Common sense reasoning can pdate itself with new rules that can contradict the old ones. The machine must be permitted to make tentative or deafult reasoning about things.</p>
+<p>week 9</p>
+</div>
+      </article>
+    </div>
+  <script src="/_markdown_plugin_assets/mermaid/mermaid.min.js"></script>
+<script src="/_markdown_plugin_assets/mermaid/mermaid_render.js"></script></body>
+</html>

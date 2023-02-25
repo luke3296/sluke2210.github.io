@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<link rel="stylesheet" href="/_assets/main.css" />
+
+    <title>Hash Tables - notes</title>
+  <link rel="stylesheet" href="/_markdown_plugin_assets/katex/katex.css" />
+<link rel="stylesheet" href="/_markdown_plugin_assets/highlight.js/atom-one-light.css" /></head>
+  <body>
+    <div class="main">
+      <nav class="navigation">
+        <a href="/">notes</a>
+      </nav>
+      <article>
+        <header>
+          <h1 class="article-title">Hash Tables</h1>
+          <div class="article-info">
+            <div>
+              <span
+                >Created At：<time datetime="1616406024974"
+                  >2021-03-22 09:40</time
+                ></span
+              >
+              <span
+                >Updated At：<time datetime="1616451507179"
+                  >2021-03-22 22:18</time
+                ></span
+              >
+            </div>
+            
+          </div>
+        </header>
+        <div class="article-content markdown-body"><h1 id="hashtables">HashTables</h1>
+<ul>
+<li>what is a hash table?</li>
+<li>why would you use one?</li>
+<li>what is a hash function?</li>
+<li>What is a key collision?</li>
+</ul>
+<p>A Hashtable is an extension of the collection ADT that is more suited to being query'd for a key.<br />
+A collection is a group of object , known as elelments, that implemnts the following java interface</p>
+<div><pre class="hljs"><code><span class="hljs-variable">Interface</span> <span class="hljs-variable">Collection</span>{
+    <span class="hljs-variable">void</span> <span class="hljs-function"><span class="hljs-title">add</span>(<span class="hljs-variable"><span class="hljs-class">Object</span></span> <span class="hljs-variable">element</span>);
+    <span class="hljs-variable">void</span> <span class="hljs-title">remove</span>(<span class="hljs-variable"><span class="hljs-class">Object</span></span> <span class="hljs-variable">element</span>);
+    <span class="hljs-variable">boolean</span> <span class="hljs-title">contains</span>(<span class="hljs-variable"><span class="hljs-class">Object</span></span> <span class="hljs-variable">element</span>);
+    <span class="hljs-variable">Iterator</span> <span class="hljs-title">interator</span>()</span>
+}</code></pre></div>
+<p>A collection may have an Interator defintion for doing something to each element in a collection.<br />
+Lists and Sets both extend the collection interface with more specific constraints. A list is and ordered collection of elelments e.g each element has a numerical index , and can contain duplicated. A set is an unordered collection of unique objects.<br />
+In a list the typical way to accsess or asess wether it constains a particular elements is via its numerical index e.g</p>
+<div><pre class="hljs"><code>my_list[] = [<span class="hljs-string">"hello"</span>, <span class="hljs-string">"this"</span>, <span class="hljs-string">"is"</span>, <span class="hljs-string">"a"</span>, <span class="hljs-string">"list"</span>, <span class="hljs-string">"hello"</span>];
+
+<span class="hljs-regexp">//</span>We can accsess elements numerically
+
+my_list[<span class="hljs-number">2</span>] == <span class="hljs-string">"is"</span> <span class="hljs-regexp">//i</span>s true
+
+<span class="hljs-regexp">//i</span>f we wish to use the contains method we must know the object we 
+<span class="hljs-regexp">//</span>want to query first
+
+my_list.contains(<span class="hljs-string">"hello"</span>)
+
+<span class="hljs-regexp">//</span>However note <span class="hljs-string">'hello'</span> appears twise <span class="hljs-keyword">in</span> the list, <span class="hljs-keyword">do</span> we return the first one?</code></pre></div>
+<p>In a list, .contains has to do a lineat scan, or a binary search if the list is sorted<br />
+Adding to the list also needs to put an objject in the right position if it's a sorted list<br />
+in python [] - list<br />
+in python {} - set</p>
+<p>By default === means the memory locations of a reference for a varible are the same.  We might want  an == 'equals' for compareingthe calue of an object, in java this is done by overloading the .euqlas method on Object</p>
+<p>When looking to addelements to the collection we could use == but its better to use a unique key that isspecific to each object in the collection. Two objects are the same if they have the same key. They key is the accsesser for the object. So we define every object in the collection a unique key.</p>
+<p>A pyhton dictionary</p>
+<div><pre class="hljs"><code>my_dict = {
+<span class="hljs-string">"key1"</span> : <span class="hljs-string">"value"</span>,
+<span class="hljs-string">"key2"</span> : <span class="hljs-string">"value"</span>,
+<span class="hljs-string">"key3"</span> : <span class="hljs-string">"value"</span>,
+}
+my_dict[<span class="hljs-string">"key1"</span>] == <span class="hljs-string">"value"</span> <span class="hljs-regexp">//i</span>s true</code></pre></div>
+<p>This notaition is a short hand way of creating a hash table in python. In python a dictionary is a hashtable. This is basically a set of the key values but every key in the set has an associated value.<br />
+Hash tables implememnt a set with an array under the hood. They are useful when the primary operation you want to perform is contains, e.g quesrying the hash table to see if it contains a perticular element. They are less useful if you need to itterate through the objects in the collection.</p>
+<p>Use Cases for hash tables</p>
+<ul>
+<li>cacheing data for speedy lookup</li>
+</ul>
+<ol>
+<li>Need an object A</li>
+<li>Check weather A is cached (contains)</li>
+<li>if not load A from disk</li>
+<li>if likely to need A again soon cache A e.g .add(A)</li>
+<li>if never going to need A again remove from cache hastTable.remove(A)</li>
+</ol>
+<p>Imagine a task where you need to make a data structure containing all possible words in a  dcitionary, do to this we could</p>
+<ol>
+<li>form a collection of all distinct words from document A, This would take n time because we would have to look at every word in the docuemnt</li>
+<li>Query this collection to see if words in document B appear in A.</li>
+</ol>
+<p>Consider a list based approach</p>
+<ol>
+<li>start with an empty  list</li>
+<li>for every word in document A scan the list to see if the word was used before. If not add it.</li>
+</ol>
+<p>The worst case is when all the words are different. Biulding the dictionary takes O(n^2) time and<br />
+O(n) space. The contains operation is also O(n)</p>
+<p>If we added the words in alphabetical order , then we could use a BST to search the list in O(log(n)) time</p>
+<p>With a hash table 'contains' can be done in constant time. With a hash table we take every word we might want to add to our hash table and assign it a unique key , a number.</p>
+<p>we create an underlying array the size of all possible words, call it the hashtable. The key is the index for the underlying array.</p>
+<p>for every word in the docuemnt, if the value at the words key is present in the hash table then add that words to the list of shared words.</p>
+<p>This would allow us to do 'contains' in constant time. Biulding the dictionary is order n, and takes infinite space.</p>
+<p>HashTable Operations</p>
+<ul>
+<li>add(Object x);</li>
+<li>remove(Object x);</li>
+<li>contains(Object x);</li>
+</ul>
+<p>Add -&gt; Get the key k from Object X. We use X.hashcode() to get the key for the object, hashcode is related to the memory location of the object. We the map the key into a position on the finite array using a hashfunction p = hashFunction(k)<br />
+We can then put X in postion p if its not allready there.</p>
+<ul>
+<li>what is a hash function</li>
+</ul>
+<p>There is an infintie number of possible values for k, it us used to find the locaion p to store the object in the hashtable.</p>
+<ul>
+<li>K is the space of possible keys, M is the set of all objects we might want to store. |M| &gt; s.</li>
+<li>S is the possible indeexs in the table</li>
+</ul>
+<div><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>K</mi><mo>=</mo><mo stretchy="false">[</mo><mn>1</mn><mo separator="true">,</mo><mn>2</mn><mo separator="true">,</mo><mn>3</mn><mo separator="true">,</mo><mn>4</mn><mo separator="true">,</mo><mn>5...</mn><mo separator="true">,</mo><mi mathvariant="normal">∣</mi><mi>M</mi><mi mathvariant="normal">∣</mi><mo>−</mo><mn>1</mn><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">K=[1,2,3,4,5 ...,|M|-1] 
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em"></span><span class="mord mathnormal" style="margin-right:0.07153em">K</span><span class="mspace" style="margin-right:0.2777777777777778em"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em"></span><span class="mopen">[</span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mord">2</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mord">3</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mord">4</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mord">5...</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mord">∣</span><span class="mord mathnormal" style="margin-right:0.10903em">M</span><span class="mord">∣</span><span class="mspace" style="margin-right:0.2222222222222222em"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em"></span><span class="mord">1</span><span class="mclose">]</span></span></span></span></span></div>
+<div><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>S</mi><mo>=</mo><mo stretchy="false">[</mo><mn>0</mn><mo separator="true">,</mo><mn>1</mn><mo separator="true">,</mo><mn>2</mn><mo separator="true">,</mo><mn>3</mn><mo separator="true">,</mo><mn>4...</mn><mo separator="true">,</mo><mi>s</mi><mo>−</mo><mn>1</mn><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">S=[0,1,2,3,4 ...,s-1]
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em"></span><span class="mord mathnormal" style="margin-right:0.05764em">S</span><span class="mspace" style="margin-right:0.2777777777777778em"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em"></span><span class="mopen">[</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mord">2</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mord">3</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mord">4...</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mord mathnormal">s</span><span class="mspace" style="margin-right:0.2222222222222222em"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em"></span><span class="mord">1</span><span class="mclose">]</span></span></span></span></span></div>
+<ul>
+<li>the hash function h can be written</li>
+</ul>
+<div><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>h</mi><mo>:</mo><mi>K</mi><mo>→</mo><mi>S</mi></mrow><annotation encoding="application/x-tex">h:K\rightarrow S
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em"></span><span class="mord mathnormal">h</span><span class="mspace" style="margin-right:0.2777777777777778em"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2777777777777778em"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em"></span><span class="mord mathnormal" style="margin-right:0.07153em">K</span><span class="mspace" style="margin-right:0.2777777777777778em"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2777777777777778em"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em"></span><span class="mord mathnormal" style="margin-right:0.05764em">S</span></span></span></span></span></div>
+<p>The hash function  might be defined as</p>
+<div><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>h</mi><mo stretchy="false">(</mo><mi>k</mi><mo stretchy="false">)</mo><mo>=</mo><mi>k</mi><mspace></mspace><mspace width="1em"></mspace><mrow><mi mathvariant="normal">m</mi><mi mathvariant="normal">o</mi><mi mathvariant="normal">d</mi></mrow><mtext> </mtext><mtext> </mtext><mn>10</mn><mtext> </mtext><mtext> </mtext><mtext> </mtext><mi>k</mi><mo>∈</mo><mi>K</mi></mrow><annotation encoding="application/x-tex">h(k) = k\mod10 \,\,\, k \in K
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em"></span><span class="mord mathnormal">h</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.03148em">k</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em"></span><span class="mord mathnormal" style="margin-right:0.03148em">k</span><span class="mspace allowbreak"></span><span class="mspace" style="margin-right:1em"></span></span><span class="base"><span class="strut" style="height:0.73354em;vertical-align:-0.0391em"></span><span class="mord"><span class="mord"><span class="mord mathrm">mod</span></span></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mord">10</span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mord mathnormal" style="margin-right:0.03148em">k</span><span class="mspace" style="margin-right:0.2777777777777778em"></span><span class="mrel">∈</span><span class="mspace" style="margin-right:0.2777777777777778em"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em"></span><span class="mord mathnormal" style="margin-right:0.07153em">K</span></span></span></span></span></div>
+<ul>
+<li>A good key gives each unique item a unieuq value.</li>
+<li>A good hash function maps keys uniformly and randomly into the full range of possible locations</li>
+<li>When a string is used as the key it must be converted to an interger<br />
+A Bad Hash Function for Strings<br />
+Suppost are key is a string of unicode chars in the unicode range 0-127, A has function could simply sum there values</li>
+</ul>
+<div><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>l</mi><mi>e</mi><mi>t</mi><mspace width="1em"></mspace><msub><mi>a</mi><mi>i</mi></msub><mspace width="1em"></mspace><mi>b</mi><mi>e</mi><mtext> </mtext><mtext> </mtext><mi>a</mi><mtext> </mtext><mtext> </mtext><mi>u</mi><mi>n</mi><mi>i</mi><mi>c</mi><mi>o</mi><mi>d</mi><mi>e</mi><mtext> </mtext><mtext> </mtext><mi>c</mi><mi>h</mi><mi>a</mi><mi>r</mi><mtext> </mtext><mtext> </mtext><msub><mi>u</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">let\quad a_i\quad be \,\, a \,\, unicode  \,\, char \,\, u_i  
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.84444em;vertical-align:-0.15em"></span><span class="mord mathnormal" style="margin-right:0.01968em">l</span><span class="mord mathnormal">e</span><span class="mord mathnormal">t</span><span class="mspace" style="margin-right:1em"></span><span class="mord"><span class="mord mathnormal">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em"><span class="pstrut" style="height:2.7em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:1em"></span><span class="mord mathnormal">b</span><span class="mord mathnormal">e</span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mord mathnormal">a</span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mord mathnormal">u</span><span class="mord mathnormal">ni</span><span class="mord mathnormal">co</span><span class="mord mathnormal">d</span><span class="mord mathnormal">e</span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mord mathnormal">c</span><span class="mord mathnormal">ha</span><span class="mord mathnormal" style="margin-right:0.02778em">r</span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mord"><span class="mord mathnormal">u</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em"><span class="pstrut" style="height:2.7em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em"><span></span></span></span></span></span></span></span></span></span></span></div>
+<p>Then</p>
+<div><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>h</mi><mo stretchy="false">(</mo><mi>k</mi><mo>=</mo><msub><mi>a</mi><mn>0</mn></msub><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><msub><mi>a</mi><mi>m</mi></msub><mo stretchy="false">)</mo><mo>=</mo></mrow><annotation encoding="application/x-tex">h(k= a_0...a_m)=
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em"></span><span class="mord mathnormal">h</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.03148em">k</span><span class="mspace" style="margin-right:0.2777777777777778em"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em"></span><span class="mord"><span class="mord mathnormal">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em"><span class="pstrut" style="height:2.7em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em"><span></span></span></span></span></span></span><span class="mord">...</span><span class="mord"><span class="mord mathnormal">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em"><span class="pstrut" style="height:2.7em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">m</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em"></span><span class="mrel">=</span></span></span></span></span></div>
+<div><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>m</mi><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mspace linebreak="newline"></mspace><mo>=</mo><mo fence="false" stretchy="true" minsize="2.4em" maxsize="2.4em">(</mo><munder><mo>∑</mo><mstyle scriptlevel="1"><mtable rowspacing="0.1000em" columnalign="left" columnspacing="1em"><mtr><mtd><mstyle scriptlevel="1" displaystyle="false"><mrow><mi>i</mi><mo>=</mo><mn>0</mn></mrow></mstyle></mtd></mtr></mtable></mstyle></munder><msub><mi>u</mi><mi>i</mi></msub><mo fence="false" stretchy="true" minsize="2.4em" maxsize="2.4em">)</mo><mspace></mspace><mspace width="1em"></mspace><mrow><mi mathvariant="normal">m</mi><mi mathvariant="normal">o</mi><mi mathvariant="normal">d</mi></mrow><mtext> </mtext><mtext> </mtext><mi>s</mi></mrow><annotation encoding="application/x-tex">m\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\\
+=\bigg(\sum_{
+\begin{subarray}{l}
+   i = 0
+\end{subarray}}
+u_i\bigg)\mod s
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em"></span><span class="mord mathnormal">m</span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em"></span></span><span class="base"><span class="strut" style="height:2.853669em;vertical-align:-1.403669em"></span><span class="mord"><span class="delimsizing size3">(</span></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.050005em"><span style="top:-1.865163em;margin-left:0em"><span class="pstrut" style="height:3.05em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mtable"><span class="col-align-l"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.66976em"><span style="top:-2.71024em"><span class="pstrut" style="height:2.7em"></span><span class="mord mtight"><span class="mord mathnormal mtight">i</span><span class="mrel mtight">=</span><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.16976em"><span></span></span></span></span></span></span></span></span></span></span><span style="top:-3.0500049999999996em"><span class="pstrut" style="height:3.05em"></span><span><span class="mop op-symbol large-op">∑</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.403669em"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mord"><span class="mord mathnormal">u</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em"><span class="pstrut" style="height:2.7em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em"><span></span></span></span></span></span></span><span class="mord"><span class="delimsizing size3">)</span></span><span class="mspace allowbreak"></span><span class="mspace" style="margin-right:1em"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em"></span><span class="mord"><span class="mord"><span class="mord mathrm">mod</span></span></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mord mathnormal">s</span></span></span></span></span></div>
+<p>Where s is the size of the hash table. This is a bad hashfunction because different 'strings' / keys are mapped to non unique intergers before taking the mod. Eg dog and god have the same keys</p>
+<ul>
+<li>A better hash function raises they key to some power</li>
+</ul>
+<div><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>m</mi><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mspace linebreak="newline"></mspace><mo>=</mo><mo fence="false" stretchy="true" minsize="2.4em" maxsize="2.4em">(</mo><munder><mo>∑</mo><mstyle scriptlevel="1"><mtable rowspacing="0.1000em" columnalign="left" columnspacing="1em"><mtr><mtd><mstyle scriptlevel="1" displaystyle="false"><mrow><mi>i</mi><mo>=</mo><mn>0</mn></mrow></mstyle></mtd></mtr></mtable></mstyle></munder><msup><mi>k</mi><mrow><mi>m</mi><mo>−</mo><mi>i</mi></mrow></msup><mo>⋅</mo><msub><mi>u</mi><mi>i</mi></msub><mo fence="false" stretchy="true" minsize="2.4em" maxsize="2.4em">)</mo><mspace></mspace><mspace width="1em"></mspace><mrow><mi mathvariant="normal">m</mi><mi mathvariant="normal">o</mi><mi mathvariant="normal">d</mi></mrow><mtext> </mtext><mtext> </mtext><mi>s</mi></mrow><annotation encoding="application/x-tex">m\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\\
+=\bigg(\sum_{
+\begin{subarray}{l}
+   i = 0
+\end{subarray}}
+k^{m-i}\cdot u_i\bigg)\mod s
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em"></span><span class="mord mathnormal">m</span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em"></span></span><span class="base"><span class="strut" style="height:2.853669em;vertical-align:-1.403669em"></span><span class="mord"><span class="delimsizing size3">(</span></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.050005em"><span style="top:-1.865163em;margin-left:0em"><span class="pstrut" style="height:3.05em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mtable"><span class="col-align-l"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.66976em"><span style="top:-2.71024em"><span class="pstrut" style="height:2.7em"></span><span class="mord mtight"><span class="mord mathnormal mtight">i</span><span class="mrel mtight">=</span><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.16976em"><span></span></span></span></span></span></span></span></span></span></span><span style="top:-3.0500049999999996em"><span class="pstrut" style="height:3.05em"></span><span><span class="mop op-symbol large-op">∑</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.403669em"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03148em">k</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.874664em"><span style="top:-3.113em;margin-right:0.05em"><span class="pstrut" style="height:2.7em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">m</span><span class="mbin mtight">−</span><span class="mord mathnormal mtight">i</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em"></span></span><span class="base"><span class="strut" style="height:2.40003em;vertical-align:-0.95003em"></span><span class="mord"><span class="mord mathnormal">u</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em"><span class="pstrut" style="height:2.7em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em"><span></span></span></span></span></span></span><span class="mord"><span class="delimsizing size3">)</span></span><span class="mspace allowbreak"></span><span class="mspace" style="margin-right:1em"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em"></span><span class="mord"><span class="mord"><span class="mord mathrm">mod</span></span></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mord mathnormal">s</span></span></span></span></span></div>
+<p>In this function the intergers in the key get a different value depeneding on where they appear, there position in the key detrmins what range in the output is effected.<br />
+A collision is when the hash fucntion for two keys returns the same value .</p>
+<p>Two option chaing and open addressing</p>
+<p>Open addressing involes seaching along the hash table for another position free to put the object in.</p>
+<p>Chaning involves storing both objects at the same key value in an extensible data structure. now each element in our hash table is a collection of objects</p>
+<p>One way to implmement the underlying hash table would be an array of linked lists.<br />
+The query operation for each 'buckkit' would take n time using linear scan. This inst a problem is the lists are small however after a certain size java switches to using a binary search tree</p>
+<p>Finding a new location in open anddressing must be derteministic, so you don't need to look at the whole data structure again. This is done with 'probing' algorithms. One example would be to look forward untill an empty spot is found. By simply adding 1 each time we get clusterings beacuse its a linear operation and will make the data structure inefechent because if u hit that key again you must travers the whole list.</p>
+<p>We can change the probing algorithm to mititgate this, one example is quadratic probing.</p>
+<div><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>p</mi><mo stretchy="false">(</mo><mi>j</mi><mo separator="true">,</mo><mi>k</mi><mo stretchy="false">)</mo><mo>=</mo><mo stretchy="false">(</mo><mi>h</mi><mo stretchy="false">(</mo><mi>k</mi><mo stretchy="false">)</mo><mo>+</mo><msup><mi>j</mi><mn>2</mn></msup><mo stretchy="false">)</mo><mspace></mspace><mspace width="1em"></mspace><mrow><mi mathvariant="normal">m</mi><mi mathvariant="normal">o</mi><mi mathvariant="normal">d</mi></mrow><mtext> </mtext><mtext> </mtext><mi>s</mi></mrow><annotation encoding="application/x-tex">p(j,k) = (h(k) + j^2)\mod s
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em"></span><span class="mord mathnormal">p</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.05724em">j</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mord mathnormal" style="margin-right:0.03148em">k</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em"></span><span class="mopen">(</span><span class="mord mathnormal">h</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.03148em">k</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em"></span></span><span class="base"><span class="strut" style="height:1.1141079999999999em;vertical-align:-0.25em"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05724em">j</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641079999999999em"><span style="top:-3.113em;margin-right:0.05em"><span class="pstrut" style="height:2.7em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mclose">)</span><span class="mspace allowbreak"></span><span class="mspace" style="margin-right:1em"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em"></span><span class="mord"><span class="mord"><span class="mord mathrm">mod</span></span></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mord mathnormal">s</span></span></span></span></span></div>
+<p>This can also be defined recursivly as follows</p>
+<div><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>p</mi><mo stretchy="false">(</mo><mi>j</mi><mo separator="true">,</mo><mi>k</mi><mo stretchy="false">)</mo><mo>=</mo><mi>h</mi><mo stretchy="false">(</mo><mi>k</mi><mo stretchy="false">)</mo><mtext> </mtext><mtext> </mtext><mtext> </mtext><mi>i</mi><mi>f</mi><mtext> </mtext><mtext> </mtext><mtext> </mtext><mi>j</mi><mo>=</mo><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">p(j,k) = h(k) \,\,\, if \,\,\, j==0
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em"></span><span class="mord mathnormal">p</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.05724em">j</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mord mathnormal" style="margin-right:0.03148em">k</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em"></span><span class="mord mathnormal">h</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.03148em">k</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mord mathnormal">i</span><span class="mord mathnormal" style="margin-right:0.10764em">f</span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mord mathnormal" style="margin-right:0.05724em">j</span><span class="mspace" style="margin-right:0.2777777777777778em"></span><span class="mrel">==</span><span class="mspace" style="margin-right:0.2777777777777778em"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em"></span><span class="mord">0</span></span></span></span></span></div>
+<div><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>p</mi><mo stretchy="false">(</mo><mi>j</mi><mo separator="true">,</mo><mi>k</mi><mo stretchy="false">)</mo><mo>=</mo><mo stretchy="false">(</mo><mi>p</mi><mo stretchy="false">(</mo><mi>j</mi><mo>−</mo><mn>1</mn><mo separator="true">,</mo><mi>k</mi><mo stretchy="false">)</mo><mo>+</mo><mn>2</mn><mi>j</mi><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo><mspace></mspace><mspace width="1em"></mspace><mrow><mi mathvariant="normal">m</mi><mi mathvariant="normal">o</mi><mi mathvariant="normal">d</mi></mrow><mtext> </mtext><mtext> </mtext><mi>s</mi></mrow><annotation encoding="application/x-tex">p(j,k) = (p(j-1, k) + 2j -1)\mod s
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em"></span><span class="mord mathnormal">p</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.05724em">j</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mord mathnormal" style="margin-right:0.03148em">k</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em"></span><span class="mopen">(</span><span class="mord mathnormal">p</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.05724em">j</span><span class="mspace" style="margin-right:0.2222222222222222em"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em"></span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mord mathnormal" style="margin-right:0.03148em">k</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em"></span></span><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em"></span><span class="mord">2</span><span class="mord mathnormal" style="margin-right:0.05724em">j</span><span class="mspace" style="margin-right:0.2222222222222222em"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em"></span><span class="mord">1</span><span class="mclose">)</span><span class="mspace allowbreak"></span><span class="mspace" style="margin-right:1em"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em"></span><span class="mord"><span class="mord"><span class="mord mathrm">mod</span></span></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mord mathnormal">s</span></span></span></span></span></div>
+<div><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>s</mi><mi>c</mi><mi>i</mi><mi>n</mi><mi>c</mi><mi>e</mi><mtext> </mtext><mtext> </mtext><mtext> </mtext><msup><mi>j</mi><mn>2</mn></msup><mo>=</mo><mo stretchy="false">(</mo><mi>j</mi><mo>−</mo><mn>1</mn><msup><mo stretchy="false">)</mo><mn>2</mn></msup><mo>+</mo><mn>2</mn><mi>j</mi><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">scince\,\,\, j^2 = (j-1)^2 + 2j -1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0585479999999998em;vertical-align:-0.19444em"></span><span class="mord mathnormal">sc</span><span class="mord mathnormal">in</span><span class="mord mathnormal">ce</span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05724em">j</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641079999999999em"><span style="top:-3.113em;margin-right:0.05em"><span class="pstrut" style="height:2.7em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em"></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.05724em">j</span><span class="mspace" style="margin-right:0.2222222222222222em"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em"></span></span><span class="base"><span class="strut" style="height:1.1141079999999999em;vertical-align:-0.25em"></span><span class="mord">1</span><span class="mclose"><span class="mclose">)</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641079999999999em"><span style="top:-3.113em;margin-right:0.05em"><span class="pstrut" style="height:2.7em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em"></span></span><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em"></span><span class="mord">2</span><span class="mord mathnormal" style="margin-right:0.05724em">j</span><span class="mspace" style="margin-right:0.2222222222222222em"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em"></span><span class="mord">1</span></span></span></span></span></div>
+<div><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow></mrow><annotation encoding="application/x-tex"></annotation></semantics></math></span><span class="katex-html" aria-hidden="true"></span></span></span></div>
+<p>The table size must be prime. If the size is prime we get a better spread of locations</p>
+<p>A question:</p>
+<p>Let h(k) = k%13 where % is the modulus operarator. Insert the following keys into the hashtable of size 13 using quadratic probing to resolve collisions.</p>
+<p>Give the sequence of locations probed during the insertion of each key<br />
+8 , 42 , 29 , 50 , 47 , 13 , 26</p>
+<table>
+<thead>
+<tr>
+<th>k</th>
+<th style="text-align:left">h(k)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>8</td>
+<td style="text-align:left">8</td>
+</tr>
+<tr>
+<td>42</td>
+<td style="text-align:left">3</td>
+</tr>
+<tr>
+<td>29</td>
+<td style="text-align:left">3</td>
+</tr>
+<tr>
+<td>50</td>
+<td style="text-align:left">12</td>
+</tr>
+<tr>
+<td>47</td>
+<td style="text-align:left">8</td>
+</tr>
+<tr>
+<td>13</td>
+<td style="text-align:left">0</td>
+</tr>
+<tr>
+<td>34</td>
+<td style="text-align:left">8</td>
+</tr>
+</tbody>
+</table>
+<p>The incrments</p>
+<table>
+<thead>
+<tr>
+<th>j</th>
+<th style="text-align:left">inc(j)= 2j-1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td style="text-align:left">1</td>
+</tr>
+<tr>
+<td>2</td>
+<td style="text-align:left">3</td>
+</tr>
+<tr>
+<td>3</td>
+<td style="text-align:left">5</td>
+</tr>
+<tr>
+<td>4</td>
+<td style="text-align:left">7</td>
+</tr>
+<tr>
+<td>5</td>
+<td style="text-align:left">9</td>
+</tr>
+</tbody>
+</table>
+<p>First we try place 8, h(8) = 8, there is nothing in position 8 so we put 8 in, no probe sequence was used</p>
+<p>the hash Table</p>
+<table>
+<thead>
+<tr>
+<th>i</th>
+<th style="text-align:left">T[i]</th>
+<th style="text-align:left">probe seq</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td style="text-align:left">13</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td>1</td>
+<td style="text-align:left"></td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td>2</td>
+<td style="text-align:left"></td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td>3</td>
+<td style="text-align:left">42</td>
+<td style="text-align:left">3</td>
+</tr>
+<tr>
+<td>4</td>
+<td style="text-align:left">29</td>
+<td style="text-align:left">3,4</td>
+</tr>
+<tr>
+<td>5</td>
+<td style="text-align:left"></td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td>6</td>
+<td style="text-align:left"></td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td>7</td>
+<td style="text-align:left"></td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td>8</td>
+<td style="text-align:left">8</td>
+<td style="text-align:left">8</td>
+</tr>
+<tr>
+<td>9</td>
+<td style="text-align:left">47</td>
+<td style="text-align:left">8, 9</td>
+</tr>
+<tr>
+<td>10</td>
+<td style="text-align:left"></td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td>11</td>
+<td style="text-align:left">34</td>
+<td style="text-align:left">8,9,12,4,11</td>
+</tr>
+<tr>
+<td>12</td>
+<td style="text-align:left">50</td>
+<td style="text-align:left"></td>
+</tr>
+</tbody>
+</table>
+<p>Then we take 42, h(42) = 3, there is nothing in position 3 so we put 42 in, The probe sequence is 3</p>
+<p>The we take h(29) = 3, a collision, we look at our imcement table for 1, it says move on 1 posisitions which is empty so we put it in posisiton 4.</p>
+<p>50 % 13 = 12 which is empty so we can put it in</p>
+<p>47 goes in position 8 However there is allready an 8 there so we go to the probe table for 1 incrmenet, it says +1 to the posistion so we put 47 in posistion 9.</p>
+<p>13 goes to posisiton 0.<br />
+34 goes in 8 again. There is something in 8 so we look at the incemenet table, it says +1. We add 1 and see that 47 is in posistion 9, so we go back to our incememnt table but add 3 from where we were e.g position 9 + 3 is posisition 12, there is something in posisition 12 ( 50 ) so we go back to the incrmement table and jump by 5 from posistion 12 this time. The array is logically circular so we wrap back round to the beggining at get to position 4 which has something in it so we jump 7 from posisition 4 (e.g inc(j=4)) to get posisition 11 which is empty so we put it there.<br />
+The probe posisitons are 8 , 9 ,12 , 4 ,11</p>
+<p>Double hashing</p>
+<p>Double hashing uses another hash function as the incrememnt function</p>
+<div><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>p</mi><mo stretchy="false">(</mo><mi>j</mi><mo separator="true">,</mo><mi>k</mi><mo stretchy="false">)</mo><mo>=</mo><mi>h</mi><mo stretchy="false">(</mo><mi>k</mi><mo stretchy="false">)</mo><mspace width="1em"></mspace><mi>j</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">p(j,k) = h(k)\quad j=0
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em"></span><span class="mord mathnormal">p</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.05724em">j</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mord mathnormal" style="margin-right:0.03148em">k</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em"></span><span class="mord mathnormal">h</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.03148em">k</span><span class="mclose">)</span><span class="mspace" style="margin-right:1em"></span><span class="mord mathnormal" style="margin-right:0.05724em">j</span><span class="mspace" style="margin-right:0.2777777777777778em"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em"></span><span class="mord">0</span></span></span></span></span></div>
+<div><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>p</mi><mo stretchy="false">(</mo><mi>j</mi><mo separator="true">,</mo><mi>k</mi><mo stretchy="false">)</mo><mo>=</mo><mo stretchy="false">(</mo><mi>p</mi><mo stretchy="false">(</mo><mi>j</mi><mo>−</mo><mn>1</mn><mo separator="true">,</mo><mi>k</mi><mo stretchy="false">)</mo><mo>+</mo><msub><mi>h</mi><mn>2</mn></msub><mo stretchy="false">(</mo><mi>k</mi><mo stretchy="false">)</mo><mo stretchy="false">)</mo><mspace></mspace><mspace width="1em"></mspace><mrow><mi mathvariant="normal">m</mi><mi mathvariant="normal">o</mi><mi mathvariant="normal">d</mi></mrow><mtext> </mtext><mtext> </mtext><mi>s</mi></mrow><annotation encoding="application/x-tex">p(j,k) = (p(j-1, k) + h_2(k))\mod s
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em"></span><span class="mord mathnormal">p</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.05724em">j</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mord mathnormal" style="margin-right:0.03148em">k</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em"></span><span class="mopen">(</span><span class="mord mathnormal">p</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.05724em">j</span><span class="mspace" style="margin-right:0.2222222222222222em"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em"></span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mord mathnormal" style="margin-right:0.03148em">k</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em"></span><span class="mord"><span class="mord mathnormal">h</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em"><span class="pstrut" style="height:2.7em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.03148em">k</span><span class="mclose">))</span><span class="mspace allowbreak"></span><span class="mspace" style="margin-right:1em"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em"></span><span class="mord"><span class="mord"><span class="mord mathrm">mod</span></span></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mord mathnormal">s</span></span></span></span></span></div>
+<p><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>h</mi><mn>2</mn></msub><mo stretchy="false">(</mo><mi>k</mi><mo stretchy="false">)</mo><mo>=</mo><mi>r</mi><mo>−</mo><mo stretchy="false">(</mo><mi>k</mi><mspace></mspace><mspace width="0.6666666666666666em"></mspace><mrow><mi mathvariant="normal">m</mi><mi mathvariant="normal">o</mi><mi mathvariant="normal">d</mi></mrow><mtext> </mtext><mtext> </mtext><mi>r</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">
+h_2(k)= r-(k\mod r) 
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em"></span><span class="mord"><span class="mord mathnormal">h</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em"><span class="pstrut" style="height:2.7em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.03148em">k</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em"></span><span class="mord mathnormal" style="margin-right:0.02778em">r</span><span class="mspace" style="margin-right:0.2222222222222222em"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em"></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.03148em">k</span><span class="mspace allowbreak"></span><span class="mspace" style="margin-right:0.6666666666666666em"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em"></span><span class="mord"><span class="mord"><span class="mord mathrm">mod</span></span></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mord mathnormal" style="margin-right:0.02778em">r</span><span class="mclose">)</span></span></span></span></span><br />
+where r is a prime less that s. The same incrememnt is added at each stage but the incremeent is different for different keys.</p>
+<div><pre class="hljs"><code><span class="hljs-keyword">given</span> A[<span class="hljs-number">0</span>..s-<span class="hljs-number">1</span>]
+add(Object K)
+    <span class="hljs-keyword">pos</span>:=h(k)
+    <span class="hljs-keyword">while</span>(T[<span class="hljs-keyword">pos</span>] != k AND T[<span class="hljs-keyword">pos</span>] != null)
+        <span class="hljs-keyword">pos</span>:=(<span class="hljs-keyword">pos</span> + r -(k%r))%s
+    <span class="hljs-keyword">if</span>(T[<span class="hljs-keyword">pos</span>] != k)
+        T[<span class="hljs-keyword">pos</span>] := k</code></pre></div>
+<ul>
+<li>another exam question</li>
+</ul>
+<p>let h(k) = k%13</p>
+<p>insert the following keys into a hashtable of size 13 using double hashingto resolve collisions. The second hash function is</p>
+<div><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mi>h</mi><mn>2</mn></msub><mo stretchy="false">(</mo><mi>k</mi><mo stretchy="false">)</mo><mo>=</mo><mn>5</mn><mo>−</mo><mo stretchy="false">(</mo><mi>k</mi><mspace></mspace><mspace width="1em"></mspace><mrow><mi mathvariant="normal">m</mi><mi mathvariant="normal">o</mi><mi mathvariant="normal">d</mi></mrow><mtext> </mtext><mtext> </mtext><mn>5</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">h_2(k) = 5-(k\mod 5)
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em"></span><span class="mord"><span class="mord mathnormal">h</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em"><span class="pstrut" style="height:2.7em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.03148em">k</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em"></span></span><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em"></span><span class="mord">5</span><span class="mspace" style="margin-right:0.2222222222222222em"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em"></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.03148em">k</span><span class="mspace allowbreak"></span><span class="mspace" style="margin-right:1em"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em"></span><span class="mord"><span class="mord"><span class="mord mathrm">mod</span></span></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mord">5</span><span class="mclose">)</span></span></span></span></span></div>
+<p>And the keys:<br />
+[8,42,29,51,47,13,34]</p>
+<table>
+<thead>
+<tr>
+<th>k</th>
+<th style="text-align:left">h(k) k%13</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>8</td>
+<td style="text-align:left">8</td>
+</tr>
+<tr>
+<td>42</td>
+<td style="text-align:left">3</td>
+</tr>
+<tr>
+<td>29</td>
+<td style="text-align:left">3</td>
+</tr>
+<tr>
+<td>51</td>
+<td style="text-align:left">12</td>
+</tr>
+<tr>
+<td>47</td>
+<td style="text-align:left">8</td>
+</tr>
+<tr>
+<td>13</td>
+<td style="text-align:left">0</td>
+</tr>
+<tr>
+<td>34</td>
+<td style="text-align:left">8</td>
+</tr>
+</tbody>
+</table>
+<p>The incrments</p>
+<table>
+<thead>
+<tr>
+<th>4</th>
+<th style="text-align:left">5-(k mod 5)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>8</td>
+<td style="text-align:left">2</td>
+</tr>
+<tr>
+<td>42</td>
+<td style="text-align:left">3</td>
+</tr>
+<tr>
+<td>29</td>
+<td style="text-align:left">1</td>
+</tr>
+<tr>
+<td>51</td>
+<td style="text-align:left">4</td>
+</tr>
+<tr>
+<td>47</td>
+<td style="text-align:left">3</td>
+</tr>
+<tr>
+<td>13</td>
+<td style="text-align:left">2</td>
+</tr>
+<tr>
+<td>34</td>
+<td style="text-align:left">1</td>
+</tr>
+</tbody>
+</table>
+<p>the hash Table</p>
+<table>
+<thead>
+<tr>
+<th>i</th>
+<th style="text-align:left">T[i]</th>
+<th style="text-align:left">probe seq</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td style="text-align:left">13</td>
+<td style="text-align:left">0</td>
+</tr>
+<tr>
+<td>1</td>
+<td style="text-align:left"></td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td>2</td>
+<td style="text-align:left"></td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td>3</td>
+<td style="text-align:left">42</td>
+<td style="text-align:left">3</td>
+</tr>
+<tr>
+<td>4</td>
+<td style="text-align:left">29</td>
+<td style="text-align:left">3,4</td>
+</tr>
+<tr>
+<td>5</td>
+<td style="text-align:left"></td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td>6</td>
+<td style="text-align:left"></td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td>7</td>
+<td style="text-align:left"></td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td>8</td>
+<td style="text-align:left">8</td>
+<td style="text-align:left">8</td>
+</tr>
+<tr>
+<td>9</td>
+<td style="text-align:left">34</td>
+<td style="text-align:left">8,9</td>
+</tr>
+<tr>
+<td>10</td>
+<td style="text-align:left"></td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td>11</td>
+<td style="text-align:left">47</td>
+<td style="text-align:left">8, 11</td>
+</tr>
+<tr>
+<td>12</td>
+<td style="text-align:left">51</td>
+<td style="text-align:left">12</td>
+</tr>
+</tbody>
+</table>
+<p>Exam Question</p>
+<p>let h(k) = k%11<br />
+p(k) = 5-(k%5):<br />
+[17,9,26,34,25,31,37,48]</p>
+<table>
+<thead>
+<tr>
+<th>key</th>
+<th style="text-align:left">h(k) = k%11)</th>
+<th style="text-align:left">p(k) = 5-(k%5)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>17</td>
+<td style="text-align:left">6</td>
+<td style="text-align:left">3</td>
+</tr>
+<tr>
+<td>9</td>
+<td style="text-align:left">9</td>
+<td style="text-align:left">1</td>
+</tr>
+<tr>
+<td>26</td>
+<td style="text-align:left">4</td>
+<td style="text-align:left">4</td>
+</tr>
+<tr>
+<td>34</td>
+<td style="text-align:left">1</td>
+<td style="text-align:left">1</td>
+</tr>
+<tr>
+<td>25</td>
+<td style="text-align:left">3</td>
+<td style="text-align:left">5</td>
+</tr>
+<tr>
+<td>31</td>
+<td style="text-align:left">9</td>
+<td style="text-align:left">4</td>
+</tr>
+<tr>
+<td>37</td>
+<td style="text-align:left">4</td>
+<td style="text-align:left">3</td>
+</tr>
+<tr>
+<td>48</td>
+<td style="text-align:left">4</td>
+<td style="text-align:left">2</td>
+</tr>
+</tbody>
+</table>
+<p>the hash Table</p>
+<table>
+<thead>
+<tr>
+<th>i</th>
+<th style="text-align:left">T[i]</th>
+<th style="text-align:left">probe seq</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td style="text-align:left"></td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td>1</td>
+<td style="text-align:left">34</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td>2</td>
+<td style="text-align:left">31</td>
+<td style="text-align:left">9,2</td>
+</tr>
+<tr>
+<td>3</td>
+<td style="text-align:left">25</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td>4</td>
+<td style="text-align:left">26</td>
+<td style="text-align:left">4</td>
+</tr>
+<tr>
+<td>5</td>
+<td style="text-align:left"></td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td>6</td>
+<td style="text-align:left">17</td>
+<td style="text-align:left">6</td>
+</tr>
+<tr>
+<td>7</td>
+<td style="text-align:left">37</td>
+<td style="text-align:left">4 , 7</td>
+</tr>
+<tr>
+<td>8</td>
+<td style="text-align:left">48</td>
+<td style="text-align:left">4 , 6 ,9</td>
+</tr>
+<tr>
+<td>9</td>
+<td style="text-align:left">9</td>
+<td style="text-align:left">9</td>
+</tr>
+<tr>
+<td>10</td>
+<td style="text-align:left"></td>
+<td style="text-align:left"></td>
+</tr>
+</tbody>
+</table>
+</div>
+      </article>
+    </div>
+  </body>
+</html>

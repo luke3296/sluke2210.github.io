@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<link rel="stylesheet" href="/_assets/main.css" />
+
+    <title>ML - notes</title>
+  <link rel="stylesheet" href="/_markdown_plugin_assets/katex/katex.css" />
+<link rel="stylesheet" href="/_markdown_plugin_assets/highlight.js/atom-one-light.css" /><style>.mermaid { background-color: white; width: 640px; }</style></head>
+  <body>
+    <div class="main">
+      <nav class="navigation">
+        <a href="/">notes</a>
+      </nav>
+      <article>
+        <header>
+          <h1 class="article-title">ML</h1>
+          <div class="article-info">
+            <div>
+              <span
+                >Created At：<time datetime="1631209922063"
+                  >2021-09-09 18:52</time
+                ></span
+              >
+              <span
+                >Updated At：<time datetime="1667293849271"
+                  >2022-11-01 09:10</time
+                ></span
+              >
+            </div>
+            
+          </div>
+        </header>
+        <div class="article-content markdown-body"><p>Lecture 1 -<br />
+Machine learning involved building a model from data, the purpouse of the model can be to predict new data or to explore the data through the machine learning algorithms. Consider the data of highrs of men and women</p>
+<table>
+<thead>
+<tr>
+<th>Male</th>
+<th style="text-align:left">Female</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1.8</td>
+<td style="text-align:left">1.7</td>
+</tr>
+<tr>
+<td>1.7</td>
+<td style="text-align:left">1.8</td>
+</tr>
+<tr>
+<td>1.8</td>
+<td style="text-align:left">1.6</td>
+</tr>
+<tr>
+<td>1.6</td>
+<td style="text-align:left">1.6</td>
+</tr>
+<tr>
+<td>1.9</td>
+<td style="text-align:left">1.5</td>
+</tr>
+</tbody>
+</table>
+<p>For the prediction task, a classifier would take the hight of a new person then apply its algorithm to give a result of male or female.</p>
+<p>Single Descision Rule Classifier : '<code>if height &gt; x, then male</code><br />
+Nearest Neighbour Classifier: <code>find person closest in hight, user there gender</code><br />
+some recondite function Classifier <code>f(height) &gt; x, then male</code></p>
+<p>considering the single descision rule classifier, the x threshold can be set to any continuous value on the hight axis. When ever its moved a certain proportion of males and females are corectly classified and a propportion ae incorectly classified.  How to we decide what x shoud be. we could use an avaraging funtion like X = (average height ) / sample_size</p>
+<p>Brute Force  - try every model ( different values for X ) and select the best. ( can only be used when the search space is small enough)</p>
+<p>Grid search - try a sub selection evenly spaced acoss the paramters to ( spllting up the height axis  into N cols and find an X in each and select the best - just brute force will a spaller space.)</p>
+<p>Neighbourhood search: start from a single solutioon and iterativly move to nearby solutions until some criteria is met.</p>
+<p>Greedy construction - build the model one step at a  time making a tree. (fast but wont allways give an optimal value)</p>
+<p>Issues with classification:</p>
+<ol>
+<li>Generalisation : how well  does the model work on new unseen data</li>
+<li>bias varience trade off: how much error is the due to a bad nmodel vs data used to train the  model</li>
+<li>overfitting : making a model too complex, so it performs worse on unseen data than the training set. occams razor</li>
+<li>Regularisation: a technique to contrain the complexity of a model</li>
+</ol>
+<p>DataTypes</p>
+<p>Varibles like height are continious, there values are Real numbers<br />
+Ordinal data is discrete numeric data that has an order like age groups 0-10, 11-20, 21-30 etc<br />
+Nominal data is a varible with a dicrete number of values with no order like colour, nationality</p>
+<p>Structured data has a physical meaning<br />
+Time Series<br />
+Text<br />
+Images<br />
+Audio</p>
+<p>Decision Trees.</p>
+<p>Quinlan's classic classification example TRAINING DATA</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Outlook</th>
+<th style="text-align:left">Temp</th>
+<th style="text-align:left">Humidity</th>
+<th style="text-align:left">windy</th>
+<th style="text-align:left">play golf</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">sunny</td>
+<td style="text-align:left">high</td>
+<td style="text-align:left">high</td>
+<td style="text-align:left">weak</td>
+<td style="text-align:left">no</td>
+</tr>
+<tr>
+<td style="text-align:left">sunny</td>
+<td style="text-align:left">high</td>
+<td style="text-align:left">high</td>
+<td style="text-align:left">strong</td>
+<td style="text-align:left">no</td>
+</tr>
+<tr>
+<td style="text-align:left">overcast</td>
+<td style="text-align:left">high</td>
+<td style="text-align:left">high</td>
+<td style="text-align:left">weak</td>
+<td style="text-align:left">yes</td>
+</tr>
+<tr>
+<td style="text-align:left">rain</td>
+<td style="text-align:left">low</td>
+<td style="text-align:left">high</td>
+<td style="text-align:left">weak</td>
+<td style="text-align:left">yes</td>
+</tr>
+<tr>
+<td style="text-align:left">rain</td>
+<td style="text-align:left">low</td>
+<td style="text-align:left">high</td>
+<td style="text-align:left">weak</td>
+<td style="text-align:left">yes</td>
+</tr>
+<tr>
+<td style="text-align:left">rain</td>
+<td style="text-align:left">low</td>
+<td style="text-align:left">low</td>
+<td style="text-align:left">weak</td>
+<td style="text-align:left">no</td>
+</tr>
+<tr>
+<td style="text-align:left">overcast</td>
+<td style="text-align:left">low</td>
+<td style="text-align:left">low</td>
+<td style="text-align:left">strong</td>
+<td style="text-align:left">yes</td>
+</tr>
+<tr>
+<td style="text-align:left">sunny</td>
+<td style="text-align:left">low</td>
+<td style="text-align:left">high</td>
+<td style="text-align:left">weak</td>
+<td style="text-align:left">no</td>
+</tr>
+<tr>
+<td style="text-align:left">sunny</td>
+<td style="text-align:left">low</td>
+<td style="text-align:left">low</td>
+<td style="text-align:left">weak</td>
+<td style="text-align:left">yes</td>
+</tr>
+<tr>
+<td style="text-align:left">rain</td>
+<td style="text-align:left">low</td>
+<td style="text-align:left">high</td>
+<td style="text-align:left">weak</td>
+<td style="text-align:left">yes</td>
+</tr>
+<tr>
+<td style="text-align:left">sunny</td>
+<td style="text-align:left">low</td>
+<td style="text-align:left">low</td>
+<td style="text-align:left">weak</td>
+<td style="text-align:left">yes</td>
+</tr>
+<tr>
+<td style="text-align:left">overcast</td>
+<td style="text-align:left">low</td>
+<td style="text-align:left">high</td>
+<td style="text-align:left">strong</td>
+<td style="text-align:left">yes</td>
+</tr>
+<tr>
+<td style="text-align:left">overcast</td>
+<td style="text-align:left">high</td>
+<td style="text-align:left">low</td>
+<td style="text-align:left">weak</td>
+<td style="text-align:left">no</td>
+</tr>
+<tr>
+<td style="text-align:left">rain</td>
+<td style="text-align:left">low</td>
+<td style="text-align:left">high</td>
+<td style="text-align:left">weak</td>
+<td style="text-align:left">yes</td>
+</tr>
+</tbody>
+</table>
+<p>Consider the following Descision tree</p>
+
+				<div>
+					
+					<pre class="mermaid">    graph TD;
+    root(what is outlook?)--&gt;Rain(Rain: is it windy);
+    root(what is outlook?)--&gt;Sun(Sun: is it humid);
+    root(what is outlook?)--&gt;Overcsast[overcast];
+    Overcsast --&gt; play1[play golf]
+    Sun --&gt; yes1[yes]
+    Sun --&gt; no1[no]
+    no1 --&gt; play2[play golf]
+  yes1 --&gt; dontplay1[Don't play golf]
+  Rain --&gt; yes2[yes]
+    Rain --&gt; no2[no]
+    no2 --&gt; play3[play golf]
+  yes2 --&gt; dontplay2[Don't play golf]
+</pre>
+				</div>
+			<p>Any Decission tree can be represneted by a set of rules.</p>
+<div><pre class="hljs"><code><span class="hljs-type">if</span> <span class="hljs-variable">outlook</span> <span class="hljs-operator">=</span>sunny
+        <span class="hljs-type">if</span> <span class="hljs-variable">humidity</span> <span class="hljs-operator">=</span>low then play=<span class="hljs-literal">true</span>
+        <span class="hljs-keyword">else</span> then play=<span class="hljs-literal">false</span>
+<span class="hljs-keyword">else</span> <span class="hljs-type">if</span> <span class="hljs-variable">outlook</span> <span class="hljs-operator">=</span>overcast <span class="hljs-type">then</span> <span class="hljs-variable">play</span> <span class="hljs-operator">=</span><span class="hljs-literal">true</span>
+<span class="hljs-keyword">else</span> <span class="hljs-type">if</span> <span class="hljs-variable">outlook</span> <span class="hljs-operator">=</span> rain
+        <span class="hljs-type">if</span> <span class="hljs-variable">windy</span> <span class="hljs-operator">=</span><span class="hljs-literal">true</span> <span class="hljs-type">then</span> <span class="hljs-variable">play</span> <span class="hljs-operator">=</span> <span class="hljs-literal">false</span>
+        <span class="hljs-keyword">else</span> <span class="hljs-type">then</span> <span class="hljs-variable">play</span> <span class="hljs-operator">=</span> <span class="hljs-literal">true</span></code></pre></div>
+<p>we can also generate such trees in the with a Classifier</p>
+<p>A descicsion tree is a graphical represneation of an non-overlapping set of rules.<br />
+By convention the tree is drawn down the page<br />
+The root node is at the top and leaf nodes at the bottom<br />
+The tree partitons the input space into disjoint regions represented by leaf nodes</p>
+<p>Descision Trees can be used to both analyse relations in the data ( explination) and to pridict new cases.</p>
+<p>Descicon trees form the basis of the most popular algorithms ensamble algorithms.</p>
+<p>Use a Descsion tree to classify new cases</p>
+<ol>
+<li>start at the root node</li>
+<li>each non-terminal node contains a question</li>
+<li>pass instance onto next node according to its data and the nodes question</li>
+<li>continue untill a terminal node is reached</li>
+<li>the pattern is classified according tto the label of the terminal node.</li>
+</ol>
+<p>Finding a decision tree from training data using one of the 5 stratergies mentioned.</p>
+<p>example greedy algoritm for constucting a solution to the traveling saleman problem.</p>
+<ol>
+<li>choose a random start city</li>
+<li>allways move to the closest unvistied city</li>
+</ol>
+<p>A greedy algorithm is an algorithm that allways takes the best immidiate or local solution while finding an awnser .<br />
+Greedy algorithms work phases. In each phase a decision is made that is the best move locally but without reguard for future consequences.<br />
+This genrally means so local minima is found<br />
+They are often used when the space of possible solutions is explonetial in nature.</p>
+<p>Top Down Induction of Decision Trees</p>
+<ol>
+<li>If all training examples at this node are classified corectly then stop.</li>
+<li>Otherwise, select an attribute as the descicion atrribute to split at the current node (the data will devide between the new spit)</li>
+<li>For each value of the attribute create a new child node</li>
+<li>split training examples between child nodes</li>
+<li>Recursivly apply these steps  to each child node.</li>
+</ol>
+<div><pre class="hljs"><code><span class="hljs-function"><span class="hljs-title">buildTree</span><span class="hljs-params">( DataSet D)</span></span>
+    TreeNode t = new TreeNode(D)
+<span class="hljs-comment">//Base case: stop building the tree</span>
+    <span class="hljs-keyword">if</span>(stoppingCriteria(D))
+        t<span class="hljs-selector-class">.setAsLeaf</span>()
+        return t
+<span class="hljs-comment">//recursive case</span>
+<span class="hljs-comment">//1. choose an attribute</span>
+    Attribute A  = chooseAttribute(D)
+<span class="hljs-comment">//2. split data by attribute</span>
+    DataSet<span class="hljs-selector-attr">[]</span> s = splitData(D,A)
+    t<span class="hljs-selector-class">.offspring</span> = new TreeNode<span class="hljs-selector-attr">[size(s)]</span>
+<span class="hljs-comment">//recursivly call for each split (depth first)</span>
+    <span class="hljs-keyword">for</span> <span class="hljs-selector-tag">i</span>:= <span class="hljs-number">1</span> to size(s)
+        t,offspring<span class="hljs-selector-attr">[i]</span> = buildTree(s<span class="hljs-selector-attr">[i]</span>)
+    return t</code></pre></div>
+<h2 id="descision-trees-part-2">Descision trees part 2</h2>
+<p>Algorithms for selecting branching attributes</p>
+<ol>
+<li>information gain</li>
+<li>Gini-index</li>
+<li>Chi-squared stat</li>
+</ol>
+<p>Three operations define a TDIDT algorithm</p>
+<ol>
+<li>
+<p>Stopping criteria<br />
+When should we stop building the tree, given the data set at any node</p>
+</li>
+<li>
+<p>Choosing an attribute to branch on<br />
+This is the important descion</p>
+</li>
+<li>
+<p>how to split the data<br />
+For discrete attributes, the easiest solution is to have one cild node for each attribute value</p>
+</li>
+</ol>
+<p>The basic principle of attribute selection is to find the attribute that leads to a branching where the classes are better split up than the parent node. In a pefect split all cases diferentiated by the attribute.There are three commonly used algorithms for assessing how well an attribute splits up a class.</p>
+<ol>
+<li>Information gain IG : based on shannon's entropy is the basis of early decission trees</li>
+<li>GINI impurity. Based on the class probability distrobution. Used in the Breiman's CART familiy of decsion tress.</li>
+<li>Chi-Squared: based on the clssic stats test of difference of distrobution. Used in Kass's CHAID decsion trees.</li>
+</ol>
+<ul>
+<li>Claude shannon introduced information theory in 1948.</li>
+<li>the key concept in information theory is entropy</li>
+<li>entropy measures the unertinty associated with a random varible</li>
+<li>consider tossing a coin. If the coin had two heads there is no entropy.</li>
+<li>if its a fiar coin there maximum entropy.</li>
+<li>if the coin is bias to land on hedas 75% of the time the entropy is somewjere in between. There is information in the squence of coin tosses.</li>
+</ul>
+<p>Suppose a radom varible X can take c values with probability of that occuring as p(X=i)<br />
+The entropy of X is given by the following summation</p>
+<div><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>c</mi><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mspace linebreak="newline"></mspace><mi>H</mi><mo stretchy="false">(</mo><mi>X</mi><mo stretchy="false">)</mo><mo>=</mo><mo>−</mo><munder><mo>∑</mo><mstyle scriptlevel="1"><mtable rowspacing="0.1000em" columnalign="left" columnspacing="1em"><mtr><mtd><mstyle scriptlevel="1" displaystyle="false"><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow></mstyle></mtd></mtr></mtable></mstyle></munder><mi>p</mi><mo stretchy="false">(</mo><mi>X</mi><mo>=</mo><mi>i</mi><mo stretchy="false">)</mo><mi>l</mi><mi>o</mi><mi>g</mi><mn>2</mn><mo stretchy="false">(</mo><mi>p</mi><mo stretchy="false">(</mo><mi>X</mi><mo>=</mo><mi>i</mi><mo stretchy="false">)</mo><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">c\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\\
+H(X)=-
+\sum_{
+
+\begin{subarray}{l}
+   i = 1
+\end{subarray}}
+p(X=i)log2(p(X=i))
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em"></span><span class="mord mathnormal">c</span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mspace" style="margin-right:0.16666666666666666em"></span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em"></span><span class="mord mathnormal" style="margin-right:0.08125em">H</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.07847em">X</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em"></span></span><span class="base"><span class="strut" style="height:2.4536740000000004em;vertical-align:-1.403669em"></span><span class="mord">−</span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.050005em"><span style="top:-1.865163em;margin-left:0em"><span class="pstrut" style="height:3.05em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mtable"><span class="col-align-l"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.66976em"><span style="top:-2.71024em"><span class="pstrut" style="height:2.7em"></span><span class="mord mtight"><span class="mord mathnormal mtight">i</span><span class="mrel mtight">=</span><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.16976em"><span></span></span></span></span></span></span></span></span></span></span><span style="top:-3.0500049999999996em"><span class="pstrut" style="height:3.05em"></span><span><span class="mop op-symbol large-op">∑</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.403669em"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mord mathnormal">p</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.07847em">X</span><span class="mspace" style="margin-right:0.2777777777777778em"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em"></span><span class="mord mathnormal">i</span><span class="mclose">)</span><span class="mord mathnormal" style="margin-right:0.01968em">l</span><span class="mord mathnormal">o</span><span class="mord mathnormal" style="margin-right:0.03588em">g</span><span class="mord">2</span><span class="mopen">(</span><span class="mord mathnormal">p</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.07847em">X</span><span class="mspace" style="margin-right:0.2777777777777778em"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em"></span><span class="mord mathnormal">i</span><span class="mclose">))</span></span></span></span></span></div>
+<p>H provides the lower bound of the minimum number of bits needed to encode the output of x<br />
+P(x)=0.5<br />
+H(0.5) = 1</p>
+<p>P(x) = 1<br />
+H(1) = 0</p>
+<p>P(x)= 00.75<br />
+H(0.75) = 0.81</p>
+<p>this entorpy is a measure of how 'pure' a node is.</p>
+<p><img src="/_resources/2c2504be8a0441ff95387e223e004c93.PNG" /></p>
+<p>Information Gain (IG)</p>
+<p>suppose that we need to choose between three attributes that produce the following splits of the train data. We sould choose the split that reducs the entropy the msot, or conversly gives the best infromation gain.</p>
+<div><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>G</mi><mi>a</mi><mi>i</mi><mi>n</mi><mo stretchy="false">(</mo><mi>X</mi><mo separator="true">,</mo><mi>A</mi><mo stretchy="false">)</mo><mo>=</mo><mi>H</mi><mo stretchy="false">(</mo><mi>X</mi><mo stretchy="false">)</mo><mo>−</mo><munder><mo>∑</mo><mstyle scriptlevel="1"><mtable rowspacing="0.1000em" columnalign="left" columnspacing="1em"><mtr><mtd><mstyle scriptlevel="1" displaystyle="false"><mrow><mi>y</mi><mi>i</mi><mi>n</mi><mi>v</mi></mrow></mstyle></mtd></mtr></mtable></mstyle></munder><mi>y</mi><mi mathvariant="normal">/</mi><mi>x</mi><mi>H</mi><mo stretchy="false">(</mo><mi>X</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">Gain(X,A) = H(X) - \sum_{
+
+\begin{subarray}{l}
+   yi n v
+\end{subarray}}
+y/xH(X)
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em"></span><span class="mord mathnormal">G</span><span class="mord mathnormal">ain</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.07847em">X</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mord mathnormal">A</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em"></span><span class="mord mathnormal" style="margin-right:0.08125em">H</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.07847em">X</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em"></span></span><span class="base"><span class="strut" style="height:2.463782em;vertical-align:-1.413777em"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.0500050000000003em"><span style="top:-1.8601089999999998em;margin-left:0em"><span class="pstrut" style="height:3.05em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mtable"><span class="col-align-l"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.6769800000000001em"><span style="top:-2.7174600000000004em"><span class="pstrut" style="height:2.7em"></span><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.03588em">y</span><span class="mord mathnormal mtight">in</span><span class="mord mathnormal mtight" style="margin-right:0.03588em">v</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.17697999999999997em"><span></span></span></span></span></span></span></span></span></span></span><span style="top:-3.050005em"><span class="pstrut" style="height:3.05em"></span><span><span class="mop op-symbol large-op">∑</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.413777em"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em"></span><span class="mord mathnormal" style="margin-right:0.03588em">y</span><span class="mord">/</span><span class="mord mathnormal">x</span><span class="mord mathnormal" style="margin-right:0.08125em">H</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.07847em">X</span><span class="mclose">)</span></span></span></span></span></div>
+<ul>
+<li>H(X) is the shannon entropy of the parent node</li>
+<li>A is the attribute were assessing</li>
+<li>|X| is the number of cases at Node X</li>
+<li>|Y| is the number of cases at Node Y<br />
+V = {A1,A2...,Ak}</li>
+<li>V is the set of Nodes for each k possible values for Attribute A</li>
+</ul>
+<h2 id="gini-impurity-index">Gini Impurity index</h2>
+<h2 id="lecture-5-k-nn-k-nearest-neighbours">Lecture 5 K-nn K nearest neighbours</h2>
+<ul>
+<li>Knn is one of the oldest ML algorithms proposed by Evelyn Fix and joseph lawson hodge in 1951</li>
+<li>Its non probablistic though can estimate posterior probabilities.</li>
+<li>k-NN is widly used as a baseline for evaultion</li>
+<li>Nearest Neighbour methods are based on a similariety metric, one such Metric is the Euclidian distance.</li>
+</ul>
+<p>For any given group of objects we must find attributes / features that are most relevant to those objects. e.g for trees we could look at leaf shape. For insects we could look ad abdomen length and antennae length. Plotting these atrribute as axis on a graph, simlar objects will appear in clusters tho this only works when the number of attributes is &lt;=3 . Placing  a new instance on this graph consists on finding the point with the smallest eulidian distance ot another and classifiying it as that class<br />
+<img src="/_resources/281f894524404fb79830c608ad3d2447.png" /></p>
+<p>NN algorithms can be visulised as a descion surface. implicit boundires deliimit regions withing which every point is closer to one data point that of al others in the set.<br />
+Also called a Voronoi diagram.<br />
+<img src="/_resources/595f07c836be466792311ad4b1742711.png" /></p>
+<ul>
+<li>
+<p>Rather than looking at the nearest neighbour with euclidian distance look at the labels of k most similar (closest) instances in the train set. A majaority vote of these k points could be used to classifiy new instances.</p>
+</li>
+<li>
+<p>k should be an odd valule so that you never end in a tie.</p>
+</li>
+<li>
+<p>The nerest neghibour 1-NN classifier is purly discrete.</p>
+</li>
+<li>
+<p>The posterior probablilty for the k-NN classifier is p(C|x) = ki/k whre ki is the number of cases in class C.</p>
+</li>
+<li>
+<p>The value of k controls the complexity of the classifier. k is tuned to achieve best genralisation.</p>
+</li>
+<li>
+<p>When k is too small there is overfitting, when k is too large there is under fitting.</p>
+</li>
+<li>
+<p>train from the corpus of data in the knn</p>
+</li>
+<li>
+<p>validation choose the best value for k</p>
+</li>
+<li>
+<p>test, easure the genralisation/performance of the classifier.</p>
+</li>
+</ul>
+<p>Apply cross validation to sample the data for model creation. Split data into V sets of the same size.<br />
+Train v classiiers on there respective train set. This creates an ensemble of classifiers.</p>
+<p>K-NN is senative to attribute scale values. data should be normalised using (X - mean(X))/std(x)</p>
+<p>There are a large number of similarity and distance measures.<br />
+<img src="/_resources/d16e77c354c74aa88a0e67393617e317.png" /><br />
+k-NN is slow when classifiying new cases due to the linear scan. To speed the process us the cases can be stored in tree data structures, this only helps for a small nubmer of attributes. we can also remove cases not near the boundry region.<br />
+Not all cases are required to define a boundry region and indeed some cses my be mis classified.<br />
+The more attributes there are the harder it is to remove cases/.</p>
+</div>
+      </article>
+    </div>
+  <script src="/_markdown_plugin_assets/mermaid/mermaid.min.js"></script>
+<script src="/_markdown_plugin_assets/mermaid/mermaid_render.js"></script></body>
+</html>

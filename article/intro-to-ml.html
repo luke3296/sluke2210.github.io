@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<link rel="stylesheet" href="/_assets/main.css" />
+
+    <title>Intro to ML - notes</title>
+  </head>
+  <body>
+    <div class="main">
+      <nav class="navigation">
+        <a href="/">notes</a>
+      </nav>
+      <article>
+        <header>
+          <h1 class="article-title">Intro to ML</h1>
+          <div class="article-info">
+            <div>
+              <span
+                >Created At：<time datetime="1667293850603"
+                  >2022-11-01 09:10</time
+                ></span
+              >
+              <span
+                >Updated At：<time datetime="1672776636488"
+                  >2023-01-03 20:10</time
+                ></span
+              >
+            </div>
+            
+          </div>
+        </header>
+        <div class="article-content markdown-body"><h1 id="intro-to-ml">Intro to ML</h1>
+<p>machine learning is a branch of Artifical intelegence concerned with algorithms that use data to tune the algorithms paramters in order to increase its accuracy when run on new unseen data. AI is the branch of computer science that aims to explore intelegince though the lense of computer science and delevop algorithms that simulate human dession making processes.</p>
+<p>Machine learning has two main objectives.</p>
+<ol>
+<li>to pridict the class of unobserved data / cluster data into relevant groups</li>
+<li>to explore relations between attibutes in data that may help to explain observed relations in real world phenoma.<br />
+e.g given some data on covid 19 cases<br />
+Pridiction: Can we predict whether someone with COVID will fully recover or get long COVID?<br />
+Explain relation: Why do people get long COVID? Is it a function of other factors such as enviroment.</li>
+</ol>
+<p>an instance  or case  or record  referes to the data corrospondong to 1 observation. e.g each row is usually an instance.</p>
+<p>a class variable is the varible that the algorithm endevours to classifiy based off the other varibles. The other varibles are often called attributes.</p>
+<p>The attributes can be:<br />
+binary, i.e 1 or 0, on or off, hot or cold, posative or negativebox<br />
+real valued,  i.e tempterature, windspeed, height<br />
+ordinal, i.e,   Age-group, Height-group<br />
+discrete set of independed satstesm i.e, colour</p>
+<p>if a problem has the a</p>
+<h2 id="descison-tree">Descison Tree</h2>
+<p>Descison Trees are a familiy of algorithms that aim to classifiy unseen data by using a set of simple rules that follow on from one another in a tree structure. DT's</p>
+<h2 id="ensemble-methods">Ensemble Methods</h2>
+<h2 id="evaulating-dts">Evaulating DT's</h2>
+<h2 id="k-nearest-neighbour">K-Nearest Neighbour</h2>
+<h2 id="linear-classifiers">Linear Classifiers</h2>
+<h2 id="support-vector-machines">Support Vector Machines</h2>
+<h2 id="artifical-nural-networks">Artifical Nural Networks</h2>
+<h2 id="clustering">Clustering</h2>
+<h2 id="reinforcment-learning">Reinforcment Learning</h2>
+<p>reinforcemnt learning is a problem faced b an agen through trail-error interactions with its enviroment.<br />
+it contrasts machine leanrning where past data is used to fit a model.<br />
+reinfrocment learning is learning from experinennce to associate states and actions with desred outcomes.</p>
+<p>An agent makes a descion based on its enviroment. The evviroment may change as a result and the eviroment gives the agent a hueristic about how 'sucsessful' the previous action was.</p>
+<p>The feedback huristic can be used to adjust the decsion made incase if faces the same descion in the future.<br />
+enviroment:<br />
+S = {s1,s2,s3,s4,s5}<br />
+actions:<br />
+A={a1,a2,a3,a4,a5}</p>
+<p>for any state action pair (S, A) he agent recives a reward signal from the enviroment</p>
+<p>r: SxA -&gt; Reward<br />
+this is a numerical signal that quantifys how well the agent is doing at meeting its objective</p>
+<p>The agent percieves a sequence of states and performs a sequenc of actions. The agent chooses an action based on a descion making stratergy or policy.<br />
+it could be a mapping of states to actions<br />
+or it could be a probablistic model</p>
+<p>the agents objective is to choose a stratergy that maximises some function of the total reward it reieves.<br />
+the agent may try and discover the policy that maximises total reward.</p>
+<p>its difficult because</p>
+<ol>
+<li>the learning is unsupervised. if the agent reciecves a reward, it has no idea of finding out if a different action would have yilded a better reward.</li>
+<li>there is usully uncertinity in the reward, its hard to learn a rule from a random varible. the reward function itself can change over time</li>
+<li>learning is online and bad decsions have nagative consequnces. each case counts owards meeting the goal and the agent must balance the need to explore with the need to explot.</li>
+<li>rewards can be delayed.</li>
+<li>actions influence future states</li>
+</ol>
+<h2 id="learning-classifier-systems">Learning Classifier Systems</h2>
+<h2 id="time-series-classification">Time Series Classification</h2>
+<h2 id="issues-in-ml">Issues in ML</h2>
+</div>
+      </article>
+    </div>
+  </body>
+</html>
